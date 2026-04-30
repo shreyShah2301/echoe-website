@@ -13,6 +13,29 @@ entry here. Tag the commit (`git tag vX.Y.Z`) before pushing.
 
 ---
 
+## [1.4.1] — 2026-04-30
+
+Favicon rendering fix.
+
+### Fixed
+
+- `public/favicon.svg` was the 32px-optimized SVG from the logo library
+  (stroke-width 1.5, orange core r=2.2). When browsers scaled it down to
+  the 16×16 tab render size, the line and orange core became sub-pixel and
+  effectively invisible — only the black orb survived. Tabs showed a blank
+  ink circle instead of the canonical mark.
+- Replaced `favicon.svg` with the 16px-optimized variant from the logo
+  library (stroke-width 1, core r=1.1) so strokes survive at small sizes.
+
+### Added
+
+- `public/favicon-32.svg` (32px-optimized variant) shipped alongside.
+- `<link>` tags in `index.html` now declare both with `sizes="16x16"` and
+  `sizes="32x32"` hints so browsers can pick the right variant per render
+  context (tab vs bookmarks-page vs retina).
+
+---
+
 ## [1.4.0] — 2026-04-30
 
 ICP-targeted v1.0 brief execution. Hero copy locked, FAQ restored, OG image
