@@ -297,9 +297,6 @@ export const DemoSectionEN = () => {
           <h2 className="h2" style={{ marginTop: 14 }}>
             Pick a scenario. <span style={{ color: 'var(--terracotta)' }}>Watch it land.</span>
           </h2>
-          <p className="lede">
-            Four real surfaces: fast, vernacular, formal, structured. Each plays through listening → transforming → inserted, and types the output. Replay as many times as you want.
-          </p>
         </div>
 
         <div style={{ marginTop: 40, display: 'flex', flexWrap: 'wrap', gap: 8 }}>

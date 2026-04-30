@@ -1,6 +1,6 @@
 -- Echoe waitlist
 -- All writes go through the `subscribe-waitlist` Edge Function (service_role insert).
--- No anon/authenticated policies are granted on this table — direct PostgREST writes are denied.
+-- No anon/authenticated policies are granted on this table; direct PostgREST writes are denied.
 -- Reads are also denied to anon/authenticated; only service_role (Edge Function, dashboard) can read.
 
 create extension if not exists "pgcrypto";

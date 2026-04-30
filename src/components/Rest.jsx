@@ -10,10 +10,10 @@ export const MechanicSectionEN = () => (
       <div style={{ maxWidth: 720 }}>
         <div className="eyebrow">Out of the way</div>
         <h2 className="h2" style={{ marginTop: 14 }}>
-          A 320 × 80 HUD. <span style={{ color: 'var(--terracotta)' }}>That's the entire UI.</span>
+          A small floating panel. <span style={{ color: 'var(--terracotta)' }}>That's the entire UI.</span>
         </h2>
         <p className="lede">
-          Echoe doesn't open a window, doesn't take focus, doesn't ask you to confirm anything. It hovers, listens, transforms, inserts, gone.
+          No window, no focus stealing, no extra clicks. Echoe hovers in the corner while you talk, transforms what you said, drops it where your cursor was, then disappears.
         </p>
       </div>
 

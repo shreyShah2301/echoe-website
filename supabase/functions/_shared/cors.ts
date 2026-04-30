@@ -6,7 +6,7 @@
 //      (production vanity URL + all preview subdomains)
 //
 // If the origin is not allowed, no `Access-Control-Allow-Origin` header is
-// returned and the browser blocks the response — which is what we want.
+// returned and the browser blocks the response, which is what we want.
 
 const ALLOWED_ORIGINS = new Set([
   'https://echoeapp.com',

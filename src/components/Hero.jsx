@@ -1,37 +1,71 @@
-// Echoe Landing EN: Hero + Nav for English Tier-1 knowledge workers
+// Echoe Landing EN: Hero + Nav
 
 import { useState, useEffect } from 'react';
 import { EchoeMark, PrimaryButton, Kbd, PulseOrb, AppTile, HUD, useTypewriter } from './Shared.jsx';
 import WaitlistForm from './WaitlistForm.jsx';
 
-const HERO_PHRASES = [
-  { text: 'Dictate in WhatsApp.', accent: 'WhatsApp' },
-  { text: 'Dictate in Slack.',    accent: 'Slack' },
-  { text: 'Dictate in Gmail.',    accent: 'Gmail' },
-  { text: 'Dictate anywhere.',    accent: 'anywhere' },
-];
+// Map ISO 639-1 codes to display names for Indian regional languages.
+// Used to localize slot 2 of the rotator based on the visitor's browser
+// language setting. Excludes English/Hindi (already static slots).
+const NATIVE_LANG_BY_CODE = {
+  mr: 'Marathi',
+  ta: 'Tamil',
+  te: 'Telugu',
+  bn: 'Bengali',
+  kn: 'Kannada',
+  ml: 'Malayalam',
+  gu: 'Gujarati',
+  pa: 'Punjabi',
+  or: 'Odia',
+  as: 'Assamese',
+};
+const NATIVE_LANG_FALLBACK = 'Marathi';
 
+function detectNativeLanguage() {
+  if (typeof navigator === 'undefined') return NATIVE_LANG_FALLBACK;
+  const tags = (navigator.languages && navigator.languages.length)
+    ? navigator.languages
+    : [navigator.language || ''];
+  for (const tag of tags) {
+    const code = tag.toLowerCase().split('-')[0];
+    const name = NATIVE_LANG_BY_CODE[code];
+    if (name) return name;
+  }
+  return NATIVE_LANG_FALLBACK;
+}
+
+// "Dictate in" stays static on line 1; only the language on line 2 cycles.
+// Slot 2 is dynamic per visitor; the rest are static.
 const CyclingHeroPhrase = () => {
+  const [nativeLang] = useState(detectNativeLanguage);
   const [i, setI] = useState(0);
   const [op, setOp] = useState(1);
+
+  const langs = ['English', nativeLang, 'Hinglish', 'Hindi', 'your language'];
+
   useEffect(() => {
     let t1, t2;
     const cycle = () => {
       t1 = setTimeout(() => setOp(0), 2300);
-      t2 = setTimeout(() => { setI(n => (n + 1) % HERO_PHRASES.length); setOp(1); }, 2500);
+      t2 = setTimeout(() => { setI(n => (n + 1) % langs.length); setOp(1); }, 2500);
     };
     cycle();
     const iv = setInterval(cycle, 2500);
     return () => { clearInterval(iv); clearTimeout(t1); clearTimeout(t2); };
-  }, []);
-  const cur = HERO_PHRASES[i];
-  const idx = cur.text.indexOf(cur.accent);
+  }, [langs.length]);
+
   return (
-    <span style={{ opacity: op, transition: 'opacity 200ms var(--ease-default)' }}>
-      {cur.text.slice(0, idx)}
-      <span style={{ color: 'var(--terracotta)' }}>{cur.accent}</span>
-      {cur.text.slice(idx + cur.accent.length)}
-    </span>
+    <>
+      <span style={{ display: 'block' }}>Dictate in</span>
+      <span style={{
+        display: 'block',
+        color: 'var(--terracotta)',
+        opacity: op,
+        transition: 'opacity 200ms var(--ease-default)',
+      }}>
+        {langs[i]}.
+      </span>
+    </>
   );
 };
 
@@ -65,25 +99,48 @@ export const NavEN = () => {
   );
 };
 
-const HERO_REPLY_EN = "Standup update. Wrapping up the auth refactor today, ek aur edge case mila so pushing the staging deploy to tomorrow. Will share Loom by EOD.";
+// The transformation example: the core "magic moment" the hero animates.
+// Spoken in casual Hinglish; output is cleaned for the Slack channel.
+const HERO_SPOKEN = "yaar iska timeline nahi ban raha";
+const HERO_REPLY  = "Yaar, this timeline isn't coming together yet.";
 
-const SlackComposerMock = () => {
-  const [phase, setPhase] = useState('idle');
-  useEffect(() => {
-    let timers = [];
-    const reset = () => {
-      timers.push(setTimeout(() => setPhase('listening'),    1000));
-      timers.push(setTimeout(() => setPhase('transforming'), 3500));
-      timers.push(setTimeout(() => setPhase('typing'),       4400));
-      timers.push(setTimeout(() => setPhase('settled'),      11200));
-      timers.push(setTimeout(() => { setPhase('idle'); reset(); }, 15500));
-    };
-    reset();
-    return () => timers.forEach(clearTimeout);
-  }, []);
-  const { shown } = useTypewriter(HERO_REPLY_EN, { speed: 18, play: phase === 'typing' });
+// Spoken-input chip that fades in during listening + transforming, fades out
+// before the typed output starts. Connects voice input to inserted text.
+const SpokenChip = ({ phase }) => {
+  const visible = phase === 'listening' || phase === 'transforming';
+  return (
+    <div style={{
+      width: '100%', maxWidth: 445,
+      opacity: visible ? 1 : 0,
+      maxHeight: visible ? 80 : 0,
+      transition: 'opacity 240ms var(--ease-default), max-height 240ms var(--ease-default)',
+      overflow: 'hidden',
+    }}>
+      <div style={{
+        background: 'var(--parchment)',
+        border: '0.5px solid var(--hairline-stronger)',
+        borderRadius: 10,
+        padding: '10px 14px',
+        font: '400 13px/1.45 var(--font-ui)',
+        color: 'var(--ink)',
+        display: 'flex', gap: 10, alignItems: 'baseline',
+      }}>
+        <span style={{
+          font: '500 10px/1 var(--font-ui)', letterSpacing: '0.12em',
+          textTransform: 'uppercase', color: 'var(--terracotta)', flexShrink: 0,
+        }}>You said</span>
+        <span style={{ fontStyle: 'italic' }}>"{HERO_SPOKEN}"</span>
+      </div>
+    </div>
+  );
+};
+
+// SlackComposerMock now receives `phase` as a prop so the parent can sync
+// the HUD with the same lifecycle. No internal phase state.
+const SlackComposerMock = ({ phase }) => {
+  const { shown } = useTypewriter(HERO_REPLY, { speed: 22, play: phase === 'typing' });
   const showText = phase === 'typing' || phase === 'settled';
-  const text = phase === 'settled' ? HERO_REPLY_EN : shown;
+  const text = phase === 'settled' ? HERO_REPLY : shown;
 
   return (
     <div style={{
@@ -98,8 +155,8 @@ const SlackComposerMock = () => {
         background: '#FAFAF7',
       }}>
         <span style={{ color: 'var(--dust)', font: '500 14px var(--font-mono)' }}>#</span>
-        <span style={{ font: '500 13px/1 var(--font-ui)', color: 'var(--ink)' }}>eng-standup</span>
-        <span style={{ font: '400 11px/1 var(--font-ui)', color: 'var(--dust)', marginLeft: 8 }}>· 12 members</span>
+        <span style={{ font: '500 13px/1 var(--font-ui)', color: 'var(--ink)' }}>design-review</span>
+        <span style={{ font: '400 11px/1 var(--font-ui)', color: 'var(--dust)', marginLeft: 8 }}>· 8 members</span>
         <div style={{ flex: 1 }} />
         <AppTile kind="slack" size={14} />
       </div>
@@ -113,7 +170,7 @@ const SlackComposerMock = () => {
               <span style={{ font: '400 11px/1 var(--font-ui)', color: 'var(--dust)' }}>9:42</span>
             </div>
             <div style={{ font: '400 13.5px/1.5 var(--font-ui)', color: 'var(--ink)' }}>
-              Anyone got the latest staging deploy notes? Bhai I need them for the customer call at 11.
+              Where are we on the v2 mocks? Locking the timeline today.
             </div>
           </div>
         </div>
@@ -128,8 +185,9 @@ const SlackComposerMock = () => {
           font: '400 13.5px/1.5 var(--font-ui)',
           color: phase === 'idle' ? 'var(--dust)' : 'var(--ink)',
           transition: 'border-color 200ms',
+          minHeight: 38,
         }}>
-          {phase === 'idle' && <span>Message #eng-standup</span>}
+          {phase === 'idle' && <span>Message #design-review</span>}
           {phase === 'listening' && (
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
               <PulseOrb size={10} />
@@ -154,8 +212,38 @@ const SlackComposerMock = () => {
   );
 };
 
+// HUD state mirrors the composer phase so the two read as one demo.
+const hudStateForPhase = (phase) => {
+  if (phase === 'transforming') return 'transforming';
+  if (phase === 'typing' || phase === 'settled') return 'inserted';
+  return 'listening';
+};
+
+const hudTitleForPhase = (phase) => {
+  if (phase === 'transforming') return 'Transforming…';
+  if (phase === 'typing' || phase === 'settled') return 'Inserted.';
+  return 'Listening.';
+};
+
 export const HeroEN = () => {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 720;
+
+  // Single source of truth for the demo cycle. SlackComposerMock + HUD
+  // both read this, so they animate as one demo, not two separate widgets.
+  const [phase, setPhase] = useState('idle');
+  useEffect(() => {
+    let timers = [];
+    const reset = () => {
+      timers.push(setTimeout(() => setPhase('listening'),    1000));
+      timers.push(setTimeout(() => setPhase('transforming'), 4200));
+      timers.push(setTimeout(() => setPhase('typing'),       5100));
+      timers.push(setTimeout(() => setPhase('settled'),      9800));
+      timers.push(setTimeout(() => { setPhase('idle'); reset(); }, 13500));
+    };
+    reset();
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
   return (
     <section style={{ padding: isMobile ? '40px 0 60px' : '64px 0 80px', overflow: 'hidden' }}>
       <div className="container" style={{
@@ -164,7 +252,7 @@ export const HeroEN = () => {
         gap: isMobile ? 36 : 56, alignItems: 'center',
       }}>
         <div>
-          <div className="eyebrow">Don't whisper when you can echo your thoughts with confidence.</div>
+          <div className="eyebrow">One hotkey. Any app. Your thoughts in your language.</div>
           <h1 style={{
             margin: '20px 0 0', maxWidth: 640,
             font: '500 clamp(40px, 6.5vw, 76px)/1.02 var(--font-ui)',
@@ -172,21 +260,14 @@ export const HeroEN = () => {
           }}>
             <CyclingHeroPhrase />
           </h1>
-          <h2 style={{
-            margin: '18px 0 0', maxWidth: 580,
-            font: '500 clamp(20px, 2.6vw, 28px)/1.22 var(--font-ui)',
-            letterSpacing: '-0.02em', color: 'var(--ink)', textWrap: 'balance',
-          }}>
-            One hotkey. Any app. <span style={{ color: 'var(--sepia)' }}>Your thoughts in your language.</span>
-          </h2>
-          <p className="lede">
-            Hold right ⌘ (your hotkey), say what you mean, let go. Echoe transcribes, cleans up filler, and inserts text into Slack, WA, Gmail, Figma, anywhere your cursor is. Input in Native, English, or mix it up. Get the output in English, code-mix, or Native.
+          <p className="lede" style={{ marginTop: 24 }}>
+            Hold right ⌘, speak naturally, release. Echoe gives you Roman, Hindi, or mixed. Wherever your cursor is.
           </p>
 
           <div style={{ marginTop: 36, display: 'flex', flexDirection: 'column', gap: 14 }}>
             <WaitlistForm source="hero" />
             <div style={{ font: '400 12px/1.5 var(--font-ui)', color: 'var(--dust)' }}>
-              <div>Apple Silicon + Intel · macOS 14+</div>
+              <div>Now in private beta · Apple Silicon + Intel · macOS 14+</div>
               <div>Free for 5 dictations a day. Pro from ₹399/mo.</div>
             </div>
           </div>
@@ -203,14 +284,23 @@ export const HeroEN = () => {
         </div>
 
         {!isMobile && (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 24 }}>
-            <SlackComposerMock />
-            <HUD state="listening" pair="EN · auto" metaRight="0:03" />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 12 }}>
+            <SpokenChip phase={phase} />
+            <SlackComposerMock phase={phase} />
+            <div style={{ marginTop: -8 }}>
+              <HUD
+                state={hudStateForPhase(phase)}
+                title={hudTitleForPhase(phase)}
+                pair="हिंदी → EN"
+                metaRight={phase === 'settled' ? '✓' : '0:03'}
+              />
+            </div>
           </div>
         )}
         {isMobile && (
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <SlackComposerMock />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+            <SpokenChip phase={phase} />
+            <SlackComposerMock phase={phase} />
           </div>
         )}
       </div>

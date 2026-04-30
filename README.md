@@ -1,6 +1,6 @@
 # echoe-website
 
-Marketing site for Echoe — voice dictation for Mac. Built with Vite + React 18.
+Marketing site for Echoe, voice dictation for Mac. Built with Vite + React 18.
 
 Source design system lives in `../Echoe Mac Design/Echoe Design System/`. Tokens
 are copied into `src/styles/tokens.css`; re-sync manually if the design system
@@ -66,7 +66,7 @@ Source: `public/og-image.svg`. Run `npm run og` to regenerate
 - **Supabase legacy keys (P2 infra debt).** This repo uses the deprecated
   `SUPABASE_SERVICE_ROLE_KEY` and `VITE_SUPABASE_ANON_KEY` env vars.
   Migration to `SUPABASE_PUBLISHABLE_KEYS` / `SUPABASE_SECRET_KEYS` is
-  deferred and coordinated with `echoe-mac` — see
+  deferred and coordinated with `echoe-mac`. See
   [docs/INFRA_DEBT.md](docs/INFRA_DEBT.md) for triggers and action items.
 
 ## Switching from waitlist → download at launch
