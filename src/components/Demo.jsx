@@ -293,7 +293,7 @@ export const DemoSectionEN = () => {
     <section id="demo" ref={sectionRef} style={{ background: 'var(--parchment)' }}>
       <div className="container">
         <div style={{ maxWidth: 720 }}>
-          <div className="eyebrow">See it run</div>
+          <div className="eyebrow">One hotkey. Any app. Your thoughts in your language.</div>
           <h2 className="h2" style={{ marginTop: 14 }}>
             Pick a scenario. <span style={{ color: 'var(--terracotta)' }}>Watch it land.</span>
           </h2>

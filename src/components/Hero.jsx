@@ -4,70 +4,6 @@ import { useState, useEffect } from 'react';
 import { EchoeMark, PrimaryButton, Kbd, PulseOrb, AppTile, HUD, useTypewriter } from './Shared.jsx';
 import WaitlistForm from './WaitlistForm.jsx';
 
-// Map ISO 639-1 codes to display names for Indian regional languages.
-// Used to localize slot 2 of the rotator based on the visitor's browser
-// language setting. Excludes English/Hindi (already static slots).
-const NATIVE_LANG_BY_CODE = {
-  mr: 'Marathi',
-  ta: 'Tamil',
-  te: 'Telugu',
-  bn: 'Bengali',
-  kn: 'Kannada',
-  ml: 'Malayalam',
-  gu: 'Gujarati',
-  pa: 'Punjabi',
-  or: 'Odia',
-  as: 'Assamese',
-};
-const NATIVE_LANG_FALLBACK = 'Marathi';
-
-function detectNativeLanguage() {
-  if (typeof navigator === 'undefined') return NATIVE_LANG_FALLBACK;
-  const tags = (navigator.languages && navigator.languages.length)
-    ? navigator.languages
-    : [navigator.language || ''];
-  for (const tag of tags) {
-    const code = tag.toLowerCase().split('-')[0];
-    const name = NATIVE_LANG_BY_CODE[code];
-    if (name) return name;
-  }
-  return NATIVE_LANG_FALLBACK;
-}
-
-// "Dictate in" stays static on line 1; only the language on line 2 cycles.
-// Slot 2 is dynamic per visitor; the rest are static.
-const CyclingHeroPhrase = () => {
-  const [nativeLang] = useState(detectNativeLanguage);
-  const [i, setI] = useState(0);
-  const [op, setOp] = useState(1);
-
-  const langs = ['English', nativeLang, 'Hinglish', 'Hindi', 'your language'];
-
-  useEffect(() => {
-    let t1, t2;
-    const cycle = () => {
-      t1 = setTimeout(() => setOp(0), 2300);
-      t2 = setTimeout(() => { setI(n => (n + 1) % langs.length); setOp(1); }, 2500);
-    };
-    cycle();
-    const iv = setInterval(cycle, 2500);
-    return () => { clearInterval(iv); clearTimeout(t1); clearTimeout(t2); };
-  }, [langs.length]);
-
-  return (
-    <>
-      <span style={{ display: 'block' }}>Dictate in</span>
-      <span style={{
-        display: 'block',
-        color: 'var(--terracotta)',
-        opacity: op,
-        transition: 'opacity 200ms var(--ease-default)',
-      }}>
-        {langs[i]}.
-      </span>
-    </>
-  );
-};
 
 const scrollToWaitlist = () => {
   const el = document.getElementById('waitlist');
@@ -252,13 +188,13 @@ export const HeroEN = () => {
         gap: isMobile ? 36 : 56, alignItems: 'center',
       }}>
         <div>
-          <div className="eyebrow">One hotkey. Any app. Your thoughts in your language.</div>
+          <div className="eyebrow">Voice dictation that finally speaks Indian.</div>
           <h1 style={{
-            margin: '20px 0 0', maxWidth: 640,
-            font: '500 clamp(40px, 6.5vw, 76px)/1.02 var(--font-ui)',
-            letterSpacing: '-0.035em', color: 'var(--ink)', textWrap: 'balance',
+            margin: '20px 0 0', maxWidth: 720,
+            font: '500 clamp(36px, 5.5vw, 64px)/1.06 var(--font-ui)',
+            letterSpacing: '-0.03em', color: 'var(--ink)', textWrap: 'balance',
           }}>
-            <CyclingHeroPhrase />
+            Stop typing and start speaking.
           </h1>
           <p className="lede" style={{ marginTop: 24 }}>
             Hold right ⌘, speak naturally, release. Echoe types in English, Hinglish, Hindi, or your native language. Wherever your cursor is.

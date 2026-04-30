@@ -13,6 +13,35 @@ entry here. Tag the commit (`git tag vX.Y.Z`) before pushing.
 
 ---
 
+## [1.3.0] — 2026-04-30
+
+Hero headline rewrite: rotator dropped in favour of a single manifesto
+statement. Eyebrows shuffled between hero and demo to give the wedge line a
+stronger position.
+
+### Hero
+
+- **H1 replaced.** Was a rotating "Dictate in [language]." (5 slots, geo-aware
+  slot 2). Now a single static line: "Stop typing and start speaking."
+- **H1 sizing tuned for the new copy.** `clamp(40px, 6.5vw, 76px)/1.02` →
+  `clamp(36px, 5.5vw, 64px)/1.06`. Slightly smaller scale, more line-height,
+  letter-spacing eased.
+- **Eyebrow swapped:** now reads "Voice dictation that finally speaks
+  Indian." (the wedge line; previously was at the demo section).
+- Removed `CyclingHeroPhrase`, `NATIVE_LANG_BY_CODE`, `NATIVE_LANG_FALLBACK`,
+  `detectNativeLanguage()` from `Hero.jsx`. Browser-language geo detection
+  is gone with the rotator.
+- Hero body line was also updated mid-cycle (in the same series of edits):
+  "Roman, Hindi, or mixed" → "English, Hinglish, Hindi, or your native
+  language."
+
+### Demo
+
+- **Eyebrow swapped:** "See it run" → "One hotkey. Any app. Your thoughts in
+  your language." (the previous hero eyebrow takes its position here).
+
+---
+
 ## [1.2.0] — 2026-04-30
 
 Canonical brand mark wired in. Nav, footer, favicon, and OG image now use the
