@@ -188,23 +188,26 @@ export const HeroEN = () => {
         gap: isMobile ? 36 : 56, alignItems: 'center',
       }}>
         <div>
-          <div className="eyebrow">Voice dictation that finally speaks Indian.</div>
+          <div className="eyebrow">Built for Indian voices and languages</div>
           <h1 style={{
             margin: '20px 0 0', maxWidth: 720,
             font: '500 clamp(36px, 5.5vw, 64px)/1.06 var(--font-ui)',
             letterSpacing: '-0.03em', color: 'var(--ink)', textWrap: 'balance',
           }}>
-            Stop typing and start speaking.
+            Stop typing. Start <span style={{ color: 'var(--product-accent)' }}>speaking.</span>
           </h1>
-          <p className="lede" style={{ marginTop: 24 }}>
-            Hold right ⌘, speak naturally, release. Echoe types in English, Hinglish, Hindi, or your native language. Wherever your cursor is.
+          <p className="lede" style={{ marginTop: 18 }}>
+            Echoe hears how Indians talk and types how Indians need. Hold right ⌘, speak naturally, release. Echoe types in English, Hinglish, Hindi, or your native language. Wherever your cursor is.
           </p>
 
-          <div style={{ marginTop: 36, display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div style={{ marginTop: 36, display: 'flex', flexDirection: 'column', gap: 10 }}>
             <WaitlistForm source="hero" />
-            <div style={{ font: '400 12px/1.5 var(--font-ui)', color: 'var(--dust)' }}>
+            <div style={{ font: '400 13px/1.5 var(--font-ui)', color: 'var(--dust)' }}>
+              Join the waitlist · 5 free dictations a day
+            </div>
+            <div style={{ font: '400 12px/1.5 var(--font-ui)', color: 'var(--dust)', marginTop: 4 }}>
               <div>Now in private beta · Apple Silicon + Intel · macOS 14+</div>
-              <div>Free for 5 dictations a day. Pro from ₹399/mo.</div>
+              <div>Pro from ₹399/mo.</div>
             </div>
           </div>
 

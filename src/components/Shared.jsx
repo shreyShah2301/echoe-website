@@ -115,6 +115,7 @@ export const AppTile = ({ kind = 'whatsapp', size = 14, style = {} }) => {
     whatsapp: 'linear-gradient(135deg, #25D366, #128C7E)',
     notion:   'linear-gradient(135deg, #1C1A15, #6B5D42)',
     gmail:    'linear-gradient(135deg, #EA4335, #FBBC05)',
+    chatgpt:  'linear-gradient(135deg, #10A37F, #1C1A15)',
   };
   return (
     <div style={{

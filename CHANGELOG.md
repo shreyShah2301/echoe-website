@@ -13,6 +13,138 @@ entry here. Tag the commit (`git tag vX.Y.Z`) before pushing.
 
 ---
 
+## [1.4.0] — 2026-04-30
+
+ICP-targeted v1.0 brief execution. Hero copy locked, FAQ restored, OG image
+rebuilt with the Devanagari→Hinglish transformation, apple-touch-icon
+shipped. Demo reordered + ChatGPT scenario added. Existing structure (Slack
+mock in hero, 4-card Mechanic, Wedge) preserved per Q&A on the brief.
+
+### Hero
+
+- **H1:** `Stop typing and start speaking.` → `Stop typing. Start <orange>speaking.</orange>`
+  Period instead of "and". The word "speaking" is now in the orange
+  product-accent colour (`var(--product-accent)` = `#C97B3F`); rest of the
+  H1 stays ink.
+- **Sub merged into a single paragraph (lede style):**
+  `Echoe hears how Indians talk and types how Indians need. Hold right ⌘,
+  speak naturally, release. Echoe types in English, Hinglish, Hindi, or
+  your native language. Wherever your cursor is.` Replaced the two-tier
+  sub (22px sepia + smaller lede) with one consolidated lede; same font
+  size throughout the paragraph.
+- **New line below the form:** `Join the waitlist · 5 free dictations a day`
+  (13px dust). The platform / pricing caption sits under it on a smaller
+  line.
+- **Eyebrow:** swapped from `Voice dictation that finally speaks Indian.`
+  to `Built for Indian voices and languages` after iterating through
+  intermediate options. Concrete positioning over wedge-claim.
+- **Final CTA section H2:** `Start talking.` → `Start speaking.` for
+  consistency with the hero.
+
+### Waitlist form
+
+- Success copy: `Got it. We'll email you when Echoe ships.` →
+  `You're on the list. Watch your inbox.`
+- Network error copy: `Our end hit a hiccup. Try again?` →
+  `Something went wrong. Try again or email hello@echoeapp.com.`
+- Validation error message unchanged.
+
+### Demo section
+
+- **Scenario order rewritten:** Slack / WhatsApp / Gmail / Notion → 
+  WhatsApp / Gmail / Slack / ChatGPT. Reads as casual messaging → formal
+  email → team chat → AI prompt; loose escalation of "how clean does
+  the output need to be."
+- **NotionPanel removed.** Notion-PRD scenario dropped.
+- **ChatGPTPanel added** (new component). Mock shows a ChatGPT 4o
+  composer; the dictated Hinglish ("Yaar mujhe ek email likhna hai
+  client ko...") becomes a clean AI prompt ("Draft a casual but
+  professional email to a client..."). Transforming phase reads
+  "Cleaning up the prompt…" to call out the use case.
+- `AppTile` now has a `chatgpt` gradient (`#10A37F` → `#1C1A15`).
+
+### FAQ
+
+- Re-imported `FAQSectionEN` in `App.jsx`; renders between Pricing and
+  FinalCTA.
+- Content rewritten to the brief's four questions: audio retention,
+  WhatsApp Web compatibility, Intel Mac support, AI training stance.
+- Older questions (offline, language list, Wispr-vs-Apple comparison,
+  cancellation) removed.
+
+### Meta + shareability
+
+- `<title>`: `Echoe. Stop typing. Start speaking.` (was `Echoe. Your
+  thoughts in your language. Voice dictation for Mac.`)
+- Description rewritten to the brief's longer Indian-language version.
+- `og:title`, `og:description`, `twitter:title`, `twitter:description`
+  realigned. `og:site_name` added.
+- `<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">`
+  added.
+
+### OG image
+
+- Rebuilt per the brief's composition: logo top-left at 1.5× scale,
+  H1 with orange `speaking.`, sub line, hotkey pill (`right ⌘`) +
+  `Hold. Talk. Release.`, Devanagari→Hinglish demo card panel right
+  (408×316). Live page right column still uses the Slack mock + HUD
+  per call; the OG-only Devanagari card is brief-spec.
+- `npm run og` regenerated the PNG.
+
+### Apple touch icon
+
+- New: `public/apple-touch-icon.png` (180×180) generated from
+  `public/echoe-icon-256.svg` (canonical 256px Echoe app icon copied
+  from the logo library).
+- `scripts/generate-og.mjs` extended to produce both
+  `og-image.png` and `apple-touch-icon.png` from their respective SVG
+  sources via `sharp`.
+
+### Tokens / palette (no breaking changes)
+
+- Brief defines a token taxonomy where `--terracotta` is the orange
+  product accent and `--forest` is the green CTA. The website's
+  existing `--terracotta` is the green CTA colour and
+  `--product-accent` is the orange. To avoid a high-risk rename across
+  many files, the new copy uses `var(--product-accent)` for the
+  orange `speaking.` highlight. No tokens renamed; site rendering
+  stable.
+
+### Em dash policy
+
+- Continued the project-wide em dash removal. Brief copy that contained
+  `—` was rendered with periods or commas in titles and prose, matching
+  the established preference.
+
+### Anti-pattern compliance
+
+- `Voice dictation for Mac` appears only in `<title>` and meta
+  description; absent from visible page content.
+- `Dictate in Slack` (and the rest of the rotator's app names) verified
+  absent across `src/` and `index.html`.
+- No new dependencies. No animation libraries.
+- CTA buttons remain forest green (`var(--terracotta)` resolves to
+  `#2F5F3D` in this codebase).
+
+### Notes / caveats
+
+- This site is a Vite SPA. The hero copy is rendered client-side, so a
+  raw `curl` of the homepage returns the HTML shell, not the headline
+  text in `<body>`. Crawlers that execute JS (Google) see the content;
+  social card unfurlers (WhatsApp / Slack / FB / Twitter / LinkedIn)
+  only read the meta tags, which are server-rendered correctly.
+  Migrating to an SSR / SSG framework was out of scope for this
+  release.
+- Devanagari rendering in the OG PNG depends on the system's font
+  fallback chain when `sharp`/`librsvg` rasterizes the SVG. If the
+  glyphs render as `tofu` boxes on the deployed image, we fall back to
+  a transliterated example or ship Devanagari as outlined paths.
+- The ChatGPT scenario currently shows "ChatGPT · 4o" in the panel
+  header. Update if the model lineup or branding changes (low effort:
+  one string in `Demo.jsx::ChatGPTPanel`).
+
+---
+
 ## [1.3.0] — 2026-04-30
 
 Hero headline rewrite: rotator dropped in favour of a single manifesto

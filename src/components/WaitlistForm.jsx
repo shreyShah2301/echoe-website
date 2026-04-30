@@ -53,7 +53,7 @@ export default function WaitlistForm({ source = 'hero', onDark = false, ctaLabel
           background: 'var(--success-green)', color: 'var(--ivory)',
           font: '500 12px/1 var(--font-ui)',
         }}>✓</span>
-        <span>Got it. We'll email you when Echoe ships.</span>
+        <span>You're on the list. Watch your inbox.</span>
       </div>
     );
   }
@@ -109,7 +109,7 @@ export default function WaitlistForm({ source = 'hero', onDark = false, ctaLabel
         }}>
           {errorKind === 'invalid'
             ? "That doesn't look like an email address."
-            : "Our end hit a hiccup. Try again?"}
+            : "Something went wrong. Try again or email hello@echoeapp.com."}
         </div>
       )}
     </form>

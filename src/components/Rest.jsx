@@ -135,12 +135,22 @@ export const PricingSectionEN = () => (
 );
 
 const FAQ_ITEMS_EN = [
-  { q: 'Does it work offline?', a: 'Not in V1, audio is transcribed in the cloud (Sarvam for STT, Anthropic for transformation). If you go offline mid-dictation, the audio is cached locally and processed when you reconnect. Nothing is lost.' },
-  { q: 'Where does my audio go?', a: 'Audio is sent to Sarvam (India) and Anthropic (US/EU) for processing, then dropped immediately. Only the transcribed text is retained, per the privacy policy. Audio is never stored long-term and never used for training.' },
-  { q: 'Which Macs are supported?', a: 'macOS 14 (Sonoma) or newer. Apple Silicon (M1, M2, M3, M4) and Intel both work. First install asks for Accessibility and Microphone permission.' },
-  { q: 'Which languages?', a: 'At launch: English, Hindi, Hinglish (mixed input). Output in Roman, Devanagari, or English. Gujarati / Bengali / Tamil / Marathi / Punjabi exploration is on the Q3 2026 roadmap.' },
-  { q: 'How is this different from Wispr Flow / Apple Dictation?', a: "Two things. (1) Hinglish is a first-class output, not auto-translated to English. (2) Per-app defaults that Echoe learns automatically, Slack stays casual, Gmail goes formal, without you toggling anything." },
-  { q: 'Can I cancel?', a: "Anytime. You drop back to the free plan. Everything you've already dictated is yours; there's no lock-in." },
+  {
+    q: 'Is my audio sent to a server?',
+    a: "Audio is processed by Sarvam (our ASR provider) for transcription, then immediately discarded. Your audio is never stored. Transcripts stay on your Mac unless you export them.",
+  },
+  {
+    q: 'Does this work in WhatsApp Web?',
+    a: "Yes. Echoe types into any text field your cursor is in, including WhatsApp Web, Slack, Gmail, Figma, terminals, and AI chat tools like ChatGPT and Claude.",
+  },
+  {
+    q: 'What if I have an Intel Mac?',
+    a: "Apple Silicon and Intel are both supported. macOS 14+ required.",
+  },
+  {
+    q: 'Does Echoe train AI on my data?',
+    a: "No. Your transcripts are not used to train any model, ours or third-party. See our privacy page for details.",
+  },
 ];
 
 const FAQItemEN = ({ q, a, defaultOpen = false }) => {
@@ -178,7 +188,7 @@ export const FinalCTAEN = () => (
     <div className="container" style={{ textAlign: 'center' }}>
       <div className="eyebrow">Try it on your Mac</div>
       <h2 style={{ margin: '20px auto 0', maxWidth: 820, font: '500 clamp(36px, 5.5vw, 60px)/1.05 var(--font-ui)', letterSpacing: '-0.03em', color: 'var(--ivory)', textWrap: 'balance' }}>
-        Stop typing. <span style={{ color: 'var(--terracotta-soft)' }}>Start talking.</span>
+        Stop typing. <span style={{ color: 'var(--terracotta-soft)' }}>Start speaking.</span>
       </h2>
       <p style={{ margin: '22px auto 0', maxWidth: 540, font: '400 17px/1.6 var(--font-ui)', color: 'rgba(245,241,232,0.7)' }}>
         Free for 5 dictations a day. No credit card. macOS 14+.

@@ -1,18 +1,9 @@
-// Echoe Landing EN: Demo (Slack / WhatsApp / Gmail / Notion)
+// Echoe Landing EN: Demo (WhatsApp / Gmail / Slack / ChatGPT)
 
 import { useState, useEffect, useRef } from 'react';
 import { AppTile, PulseOrb, HUD, useInView, useTypewriter } from './Shared.jsx';
 
 const SCENARIOS_EN = [
-  {
-    id: 'slack-pm',
-    app: 'slack', appName: 'Slack',
-    title: 'Standup update',
-    subtitle: '#product-launch',
-    pair: 'EN · clean-up',
-    spoken: "Quick update on the launch. We're slipping two days because the analytics integration ka one webhook is firing twice. Shrey is on it, should land EOD tomorrow. Going to send the comms team a heads up.",
-    output: "Quick update on the launch. We're slipping by two days because one webhook in the analytics integration is firing twice. Shrey is on it; should land by EOD tomorrow. I'll send the comms team a heads-up.",
-  },
   {
     id: 'whatsapp-vendor',
     app: 'whatsapp', appName: 'WhatsApp',
@@ -32,13 +23,22 @@ const SCENARIOS_EN = [
     output: "Hi Anand,\n\nThanks for the call yesterday. Quick recap of where we are:\n\n- ARR: ₹2.3 Cr, growing 18% MoM\n- Two open questions you raised on burn runway and the design hire. I'll send a doc on both by Friday\n- One heads-up: we're closing a small bridge before the main round\n\nMore soon.",
   },
   {
-    id: 'notion-prd',
-    app: 'notion', appName: 'Notion',
-    title: 'PRD section',
-    subtitle: 'Echoe · Q1 roadmap',
-    pair: 'EN · structured',
-    spoken: "Okay so the problem is that knowledge workers in India switch languages mid-sentence and every dictation tool either translates them to English or just gives up. Why now, voice-first interfaces are finally catching up but they're built for monolingual users. What we're building is a Mac app that listens to how you actually talk and inserts text in any app, keeping the code-switching intact. Three milestones for Q1, beta launch in February, paid tier in March, mobile in April.",
-    output: "## Problem\nKnowledge workers in India switch languages mid-sentence. Every dictation tool either translates them to English or gives up entirely.\n\n## Why now\nVoice-first interfaces are finally catching up, but they're built for monolingual users.\n\n## What we're building\nA Mac app that listens to how you actually talk and inserts text in any app, keeping the code-switching intact.\n\n## Q1 milestones\n- February, beta launch\n- March, paid tier\n- April, mobile",
+    id: 'slack-pm',
+    app: 'slack', appName: 'Slack',
+    title: 'Standup update',
+    subtitle: '#product-launch',
+    pair: 'EN · clean-up',
+    spoken: "Quick update on the launch. We're slipping two days because the analytics integration ka one webhook is firing twice. Shrey is on it, should land EOD tomorrow. Going to send the comms team a heads up.",
+    output: "Quick update on the launch. We're slipping by two days because one webhook in the analytics integration is firing twice. Shrey is on it; should land by EOD tomorrow. I'll send the comms team a heads-up.",
+  },
+  {
+    id: 'chatgpt-prompt',
+    app: 'chatgpt', appName: 'ChatGPT',
+    title: 'Quick prompt',
+    subtitle: 'Hinglish to AI prompt',
+    pair: 'Hinglish → EN',
+    spoken: "Yaar mujhe ek email likhna hai client ko, deadline miss ho gayi, do din late hain. Casual but professional rakhna, aur ek follow-up plan bhi suggest kar dena.",
+    output: "Draft a casual but professional email to a client. We missed a deadline by two days. Apologize for the delay and suggest a short follow-up plan.",
   },
 ];
 
@@ -165,57 +165,88 @@ const GmailPanel = ({ scenario, phase, typed }) => {
   );
 };
 
-const NotionPanel = ({ scenario, phase, typed }) => {
+// ============================================================================
+// ChatGPTPanel: prompt composer mock — text inserts into the message box.
+// Header reads as "ChatGPT · 4o"; body has a soft prompt-coaching hint that
+// fades when the user starts dictating.
+// ============================================================================
+const ChatGPTPanel = ({ scenario, phase, typed }) => {
   const showText = phase === 'typing' || phase === 'settled';
-  const lines = (typed || '').split('\n');
   return (
     <div style={{
       width: '100%', maxWidth: 600, background: '#FFFFFF',
       border: '0.5px solid var(--hairline-stronger)', borderRadius: 12,
       overflow: 'hidden', boxShadow: '0 12px 40px rgba(28,26,21,0.10)',
     }}>
-      <div style={{ padding: '14px 18px', borderBottom: '0.5px solid var(--hairline)', display: 'flex', alignItems: 'center', gap: 10 }}>
-        <span style={{ font: '500 16px/1 var(--font-ui)' }}>📄</span>
-        <span style={{ font: '500 14px/1.2 var(--font-ui)', color: 'var(--ink)' }}>Echoe · Q1 roadmap</span>
+      <div style={{
+        padding: '14px 18px', borderBottom: '0.5px solid var(--hairline)',
+        display: 'flex', alignItems: 'center', gap: 10, background: '#FAFAF7',
+      }}>
+        <AppTile kind="chatgpt" size={16} />
+        <span style={{ font: '500 13px/1 var(--font-ui)', color: 'var(--ink)' }}>ChatGPT</span>
+        <span style={{ font: '400 11px/1 var(--font-ui)', color: 'var(--dust)' }}>· 4o</span>
         <div style={{ flex: 1 }} />
-        <AppTile kind="notion" size={14} />
+        <span style={{ font: '400 11px/1 var(--font-ui)', color: 'var(--dust)' }}>New chat</span>
       </div>
-      <div style={{ padding: '20px 24px', minHeight: 280, font: '400 14px/1.65 var(--font-ui)', color: showText ? 'var(--ink)' : 'var(--dust)' }}>
-        {phase === 'idle' && <span>Type '/' for commands…</span>}
-        {phase === 'listening' && <><PulseOrb size={12} style={{ display:'inline-block', verticalAlign:'middle', marginRight:8 }} /><span style={{ color: 'var(--product-accent)', font: '500 11px/1 var(--font-ui)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Listening · {scenario.pair}</span></>}
-        {phase === 'transforming' && <span style={{ color: 'var(--sepia)' }}>Structuring with headings + bullets…</span>}
-        {showText && lines.map((ln, i) => {
-          const isLast = i === lines.length - 1;
-          const caret = phase === 'typing' && isLast ? <span className="typing-caret" /> : null;
-          if (ln.startsWith('## ')) {
-            return (
-              <div key={i} style={{
-                font: '600 16px/1.3 var(--font-ui)', color: 'var(--ink)',
-                marginTop: i === 0 ? 0 : 16, marginBottom: 4,
-              }}>{ln.replace(/^## /, '')}{caret}</div>
-            );
-          }
-          if (ln.startsWith('- ')) {
-            return (
-              <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 2 }}>
-                <span style={{ color: 'var(--dust)' }}>•</span>
-                <span style={{ flex: 1 }}>{ln.replace(/^- /, '')}{caret}</span>
-              </div>
-            );
-          }
-          if (ln === '') return <div key={i} style={{ height: 6 }} />;
-          return <div key={i}>{ln}{caret}</div>;
-        })}
+
+      <div style={{
+        padding: '32px 24px 16px', minHeight: 200,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>
+        <div style={{
+          font: '500 16px/1.3 var(--font-ui)', color: 'var(--dust)',
+          textAlign: 'center', maxWidth: 360,
+        }}>
+          What can I help with?
+        </div>
+      </div>
+
+      <div style={{ padding: '12px 16px 16px', borderTop: '0.5px solid var(--hairline)' }}>
+        <div style={{
+          border: `1px solid ${showText ? 'var(--ink)' : 'var(--hairline-stronger)'}`,
+          borderRadius: 12, padding: '12px 14px',
+          font: '400 14px/1.55 var(--font-ui)', color: 'var(--ink)',
+          minHeight: 56, transition: 'border-color 200ms',
+          display: 'flex', alignItems: 'flex-start', gap: 10,
+        }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            {phase === 'idle' && <span style={{ color: 'var(--dust)' }}>Message ChatGPT</span>}
+            {phase === 'listening' && (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                <PulseOrb size={10} />
+                <span style={{ color: 'var(--product-accent)', font: '500 10px/1 var(--font-ui)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Listening</span>
+              </span>
+            )}
+            {phase === 'transforming' && (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', border: '1.5px solid var(--ink)', borderTopColor: 'transparent', animation: 'echoe-spin 0.9s linear infinite' }} />
+                <span style={{ color: 'var(--ink)', font: '400 12px/1 var(--font-ui)' }}>Cleaning up the prompt…</span>
+              </span>
+            )}
+            {showText && (
+              <span style={{ whiteSpace: 'pre-wrap' }}>
+                {typed}{phase === 'typing' && <span className="typing-caret" />}
+              </span>
+            )}
+          </div>
+          {showText && (
+            <div style={{
+              width: 28, height: 28, borderRadius: '50%', background: 'var(--ink)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: '#FFFFFF', font: '500 14px/1 var(--font-ui)', flexShrink: 0,
+            }}>↑</div>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
 const ScenarioPanel = ({ scenario, phase, typed }) => {
-  if (scenario.id === 'slack-pm') return <SlackPanel scenario={scenario} phase={phase} typed={typed} />;
   if (scenario.id === 'whatsapp-vendor') return <WhatsAppPanel scenario={scenario} phase={phase} typed={typed} />;
   if (scenario.id === 'gmail-investor') return <GmailPanel scenario={scenario} phase={phase} typed={typed} />;
-  return <NotionPanel scenario={scenario} phase={phase} typed={typed} />;
+  if (scenario.id === 'slack-pm') return <SlackPanel scenario={scenario} phase={phase} typed={typed} />;
+  return <ChatGPTPanel scenario={scenario} phase={phase} typed={typed} />;
 };
 
 const SpokenStripEN = ({ scenario, phase }) => {
