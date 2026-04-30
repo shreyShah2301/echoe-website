@@ -87,7 +87,7 @@ export const NavEN = () => {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         height: 64, gap: 16,
       }}>
-        <EchoeMark size={22} />
+        <EchoeMark height={32} />
         <div style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
           <a href="#demo" style={{ font: '400 14px/1 var(--font-ui)', color: 'var(--sepia)', textDecoration: 'none' }}>Demo</a>
           <a href="#how" style={{ font: '400 14px/1 var(--font-ui)', color: 'var(--sepia)', textDecoration: 'none' }}>How it works</a>
@@ -261,7 +261,7 @@ export const HeroEN = () => {
             <CyclingHeroPhrase />
           </h1>
           <p className="lede" style={{ marginTop: 24 }}>
-            Hold right ⌘, speak naturally, release. Echoe gives you Roman, Hindi, or mixed. Wherever your cursor is.
+            Hold right ⌘, speak naturally, release. Echoe types in English, Hinglish, Hindi, or your native language. Wherever your cursor is.
           </p>
 
           <div style={{ marginTop: 36, display: 'flex', flexDirection: 'column', gap: 14 }}>

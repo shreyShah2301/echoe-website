@@ -197,7 +197,7 @@ export const FooterEN = () => (
   <footer style={{ background: 'var(--ink)', color: 'rgba(245,241,232,0.6)', padding: '40px 0', borderTop: '0.5px solid rgba(245,241,232,0.08)' }}>
     <div className="container" style={{ display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between', font: '400 12px/1.5 var(--font-ui)' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
-        <EchoeMark size={18} color="var(--ivory)" />
+        <EchoeMark height={28} variant="cream" />
         <span style={{ fontStyle: 'italic' }}>Don't whisper when you can echo your thoughts with confidence.</span>
       </div>
       <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap' }}>

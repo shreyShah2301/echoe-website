@@ -4,21 +4,21 @@
 import { useState, useEffect, useRef } from 'react';
 
 // ============================================================================
-// EchoeMark: the orb + wordmark lockup, sized for nav and footer.
+// EchoeMark: canonical wordmark lockup. Renders the SVG from `public/`.
+// `variant`: "primary" (ink + terracotta core, for cream surfaces) or
+// "cream" (single-fill cream, for dark surfaces like the footer).
+// `height`: pixel height of the mark; width auto-derives from the SVG aspect.
 // ============================================================================
-export const EchoeMark = ({ size = 22, withWord = true, color = 'var(--ink)' }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-    <div style={{
-      width: size, height: size, borderRadius: '50%', background: color, flexShrink: 0,
-    }} />
-    {withWord && (
-      <span style={{
-        font: `500 ${size * 0.85}px/1 var(--font-ui)`,
-        letterSpacing: '-0.015em', color,
-      }}>Echoe</span>
-    )}
-  </div>
-);
+export const EchoeMark = ({ height = 28, variant = 'primary' }) => {
+  const src = variant === 'cream' ? '/echoe-wordmark-cream.svg' : '/echoe-wordmark.svg';
+  return (
+    <img
+      src={src}
+      alt="Echoe"
+      style={{ height, width: 'auto', display: 'block' }}
+    />
+  );
+};
 
 // ============================================================================
 // Kbd: keyboard chip in JetBrains Mono.

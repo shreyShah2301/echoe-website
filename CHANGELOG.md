@@ -13,6 +13,49 @@ entry here. Tag the commit (`git tag vX.Y.Z`) before pushing.
 
 ---
 
+## [1.2.0] — 2026-04-30
+
+Canonical brand mark wired in. Nav, footer, favicon, and OG image now use the
+official Echoe wordmark from the logo library at
+`Echoe Mac Design/Echoe Logo Library/`. Plus a hero body copy refresh.
+
+### Brand assets
+
+- **Nav + footer** now use the canonical wordmark via the rewritten
+  `EchoeMark` component. The placeholder orb-and-text was replaced with an
+  `<img>` referencing the proper SVG. Brand-correct lowercase "echoe"
+  lockup; the old capital "Echoe" was a placeholder.
+- **`EchoeMark` API rewritten:** `<EchoeMark height={number} variant="primary"|"cream" />`.
+  Drops the old `size` / `color` / `withWord` props. Two variants now: ink
+  (with terracotta orb core, for cream surfaces) and cream (single-fill,
+  for the dark footer band).
+- **Tightened the website's wordmark SVGs** (`public/echoe-wordmark.svg`
+  and `public/echoe-wordmark-cream.svg`): viewBox `0 0 360 80` →
+  `32 14 180 52`. Source library files in `Echoe Mac Design/` are
+  untouched. The canonical 360×80 canvas has ~45% padding around the
+  mark, which made the logo render small in the nav. The website-side
+  copies crop to content; logos now read at intended visual weight.
+- **Favicon** swapped from a hand-rolled placeholder to the canonical
+  32px app icon (`favicon/echoe-favicon-32.svg`): parchment box, line
+  shirorekha, ink orb, terracotta core.
+- **OG image** rebuilt to embed the canonical wordmark elements at 2.4×
+  scale instead of the ad-hoc circle + capital "Echoe" mock. PNG
+  regenerated.
+
+### Hero copy
+
+- Body line updated: "Echoe gives you Roman, Hindi, or mixed." →
+  "Echoe types in English, Hinglish, Hindi, or your native language."
+  Plain-language list of output modes; aligns with the geo rotator in
+  the H1.
+
+### Sizing
+
+- Nav wordmark: `height={32}` (echoe text ~21px on screen).
+- Footer wordmark: `height={28}` (echoe text ~18px on dark band).
+
+---
+
 ## [1.1.0] — 2026-04-30
 
 First content/UX overhaul after launch. ICP-focused copy, geo-aware rotator,
