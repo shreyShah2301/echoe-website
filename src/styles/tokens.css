@@ -1,0 +1,74 @@
+/* ============================================================================
+   Echoe Design System — colors_and_type.css
+   Cream palette, V1 only. No dark mode.
+   Source of truth: ../Echoe Mac Design/Echoe Design System/colors_and_type.css
+   ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ----- Cream palette ------------------------------------------------- */
+  --ivory:           #F5F1E8;
+  --parchment:       #EDE7D8;
+  --ink:             #1C1A15;
+  --sepia:           #6B5D42;
+  --dust:            #8B7A5C;
+  --terracotta:      #2F5F3D;
+  --terracotta-soft: #7DAA89;
+  /* Product accent: only used INSIDE simulated app/HUD chrome (pulse orb,
+     Listening label, mini submit orb). Stays the real Echoe app color so
+     product mocks look like the actual app. Website chrome uses --terracotta. */
+  --product-accent:  #C97B3F;
+  --muted-red:       #A0301C;
+  --success-green:   #0F6E56;
+
+  --hairline:           rgba(28, 26, 21, 0.08);
+  --hairline-stronger:  rgba(28, 26, 21, 0.15);
+  --hairline-strong:    rgba(28, 26, 21, 0.20);
+
+  --ivory-on-dark-strong: rgba(245, 241, 232, 1);
+  --ivory-on-dark-mid:    rgba(245, 241, 232, 0.65);
+  --ivory-on-dark-soft:   rgba(245, 241, 232, 0.45);
+  --hairline-on-dark:     rgba(245, 241, 232, 0.12);
+  --hairline-on-dark-mid: rgba(245, 241, 232, 0.20);
+  --kbd-bg-on-dark:       rgba(245, 241, 232, 0.15);
+
+  --tint-terracotta-fill:   rgba(47, 95, 61, 0.05);
+  --tint-terracotta-border: rgba(47, 95, 61, 0.22);
+  --tint-success-fill:      rgba(15, 110, 86, 0.12);
+
+  --app-slack:    linear-gradient(135deg, #E01E5A, #36C5F0);
+  --app-mail:     linear-gradient(135deg, #1F8FFF, #82C2FF);
+  --app-whatsapp: linear-gradient(135deg, #25D366, #128C7E);
+  --app-notion:   linear-gradient(135deg, #1C1A15, #6B5D42);
+
+  --traffic-close: #FF5F57;
+  --traffic-min:   #FEBC2E;
+  --traffic-max:   #28C840;
+
+  --font-ui:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-deva:    'Noto Sans Devanagari', 'Inter', sans-serif;
+  --font-mono:    'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+
+  --ease-default: cubic-bezier(.4, 0, .2, 1);
+  --dur-fast:     150ms;
+  --dur-default:  200ms;
+  --dur-slow:     400ms;
+  --dur-pulse:    1400ms;
+}
+
+html, body {
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes echoe-pulse {
+  0%   { box-shadow: 0 0 0 0    rgba(201, 123, 63, 0.45); }
+  100% { box-shadow: 0 0 0 14px rgba(201, 123, 63, 0);    }
+}
+
+@keyframes echoe-spin { to { transform: rotate(360deg); } }
+@keyframes echoe-blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
