@@ -63,6 +63,11 @@ Source: `public/og-image.svg`. Run `npm run og` to regenerate
 - **Email canonicalization.** DB enforces `email = lower(email)` via CHECK,
   so any non-canonical insert fails fast. The Edge Function lowercases on the
   way in. No anon write path exists.
+- **Supabase legacy keys (P2 infra debt).** This repo uses the deprecated
+  `SUPABASE_SERVICE_ROLE_KEY` and `VITE_SUPABASE_ANON_KEY` env vars.
+  Migration to `SUPABASE_PUBLISHABLE_KEYS` / `SUPABASE_SECRET_KEYS` is
+  deferred and coordinated with `echoe-mac` — see
+  [docs/INFRA_DEBT.md](docs/INFRA_DEBT.md) for triggers and action items.
 
 ## Switching from waitlist → download at launch
 
