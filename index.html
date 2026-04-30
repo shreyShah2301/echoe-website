@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Echoe. Dictate everywhere on Mac. Hinglish included.</title>
+  <title>Echoe — Your thoughts in your language. Voice dictation for Mac.</title>
   <meta name="description" content="A voice dictation app for Mac that doesn't auto-translate you to English. Hold right ⌘, talk, let go. Slack, Linear, Gmail, anywhere you type.">
 
   <link rel="canonical" href="https://echoeapp.com/">
@@ -11,16 +11,16 @@
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://echoeapp.com/">
-  <meta property="og:title" content="Echoe. Dictate everywhere on Mac. Hinglish included.">
-  <meta property="og:description" content="A voice dictation app for Mac that doesn't auto-translate you to English. Hold right ⌘, talk, let go.">
+  <meta property="og:title" content="Echoe — Your thoughts in your language.">
+  <meta property="og:description" content="Your thoughts in your language. Voice dictation for Mac.">
   <meta property="og:image" content="https://echoeapp.com/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://echoeapp.com/">
-  <meta name="twitter:title" content="Echoe. Dictate everywhere on Mac. Hinglish included.">
-  <meta name="twitter:description" content="A voice dictation app for Mac that doesn't auto-translate you to English. Hold right ⌘, talk, let go.">
+  <meta name="twitter:title" content="Echoe — Your thoughts in your language.">
+  <meta name="twitter:description" content="Your thoughts in your language. Voice dictation for Mac.">
   <meta name="twitter:image" content="https://echoeapp.com/og-image.png">
 
   <style>
@@ -33,6 +33,27 @@
     @media (max-width: 720px) { section { padding: 72px 0; } }
     .container { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 32px; }
     @media (max-width: 720px) { .container { padding: 0 22px; } }
+
+    /* 2x2 on desktop, 1 col on mobile. Prevents an orphaned 4th card. */
+    .mechanic-grid {
+      display: grid; gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    @media (max-width: 720px) {
+      .mechanic-grid { grid-template-columns: 1fr; }
+    }
+
+    /* 4-up on desktop, 2x2 on tablet, stacked on mobile. */
+    .pricing-grid {
+      display: grid; gap: 16px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    @media (max-width: 1080px) {
+      .pricing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 540px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
 
     .eyebrow {
       font: 500 11px/1.4 var(--font-ui); letter-spacing: 0.14em;

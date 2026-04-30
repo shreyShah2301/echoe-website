@@ -177,7 +177,7 @@ export const HeroEN = () => {
             font: '500 clamp(20px, 2.6vw, 28px)/1.22 var(--font-ui)',
             letterSpacing: '-0.02em', color: 'var(--ink)', textWrap: 'balance',
           }}>
-            One hotkey. Any app. <span style={{ color: 'var(--sepia)' }}>Speak the way you actually talk —</span>code-switching included.
+            One hotkey. Any app. <span style={{ color: 'var(--sepia)' }}>Your thoughts in your language.</span>
           </h2>
           <p className="lede">
             Hold right ⌘ (your hotkey), say what you mean, let go. Echoe transcribes, cleans up filler, and inserts text into Slack, WA, Gmail, Figma, anywhere your cursor is. Input in Native, English, or mix it up. Get the output in English, code-mix, or Native.

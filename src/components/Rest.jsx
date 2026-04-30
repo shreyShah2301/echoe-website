@@ -17,10 +17,7 @@ export const MechanicSectionEN = () => (
         </p>
       </div>
 
-      <div style={{
-        marginTop: 56, display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16,
-      }}>
+      <div className="mechanic-grid" style={{ marginTop: 56 }}>
         <Card>
           <div className="eyebrow" style={{ color: 'var(--dust)', marginBottom: 16 }}>Step 01</div>
           <div style={{ font: '500 22px/1.25 var(--font-ui)', color: 'var(--ink)', letterSpacing: '-0.015em', marginBottom: 14 }}>Hold a hotkey.</div>
@@ -83,9 +80,10 @@ export const MechanicSectionEN = () => (
 );
 
 const PRICES_EN = [
-  { id: 'free',  label: 'Free',          price: '₹0',     suffix: '',         tag: '5 dictations a day',         blurb: 'Enough to know whether Echoe is for you.' },
-  { id: 'month', label: 'Pro · Monthly', price: '₹399',   suffix: '/ month',  tag: '₹13 / day. Less than a chai.', blurb: 'The default. For anyone using Echoe daily.', highlight: true },
-  { id: 'year',  label: 'Pro · Yearly',  price: '₹3,999', suffix: '/ year',   tag: 'Roughly two months free',    blurb: 'Best value, billed once.' },
+  { id: 'free',  label: 'Free',          price: '₹0',     suffix: '',         tag: '5 dictations a day',           blurb: 'Enough to know whether Echoe is for you.' },
+  { id: 'week',  label: 'Pro · Weekly',  price: '₹100',   suffix: '/ week',   tag: 'Try it now',                    blurb: 'Full Pro, billed weekly. The cheapest way to see if it sticks.' },
+  { id: 'month', label: 'Pro · Monthly', price: '₹399',   suffix: '/ month',  tag: '₹13 / day. Less than a chai.',  blurb: 'The default. For anyone using Echoe daily.', highlight: true },
+  { id: 'year',  label: 'Pro · Yearly',  price: '₹3,999', suffix: '/ year',   tag: 'Roughly two months free',       blurb: 'Best value, billed once.' },
 ];
 
 export const PricingSectionEN = () => (
@@ -98,13 +96,13 @@ export const PricingSectionEN = () => (
         </h2>
         <p className="lede">No trial-expiry pressure. No credit card upfront. The free plan is yours to keep.</p>
       </div>
-      <div style={{ marginTop: 56, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+      <div className="pricing-grid" style={{ marginTop: 56 }}>
         {PRICES_EN.map(p => (
           <div key={p.id} style={{
             padding: 28,
             background: p.highlight ? 'var(--ink)' : 'var(--ivory)',
             color: p.highlight ? 'var(--ivory)' : 'var(--ink)',
-            border: `0.5px solid ${p.highlight ? 'var(--ink)' : 'var(--hairline)'}`,
+            border: `0.5px solid ${p.highlight ? 'var(--ink)' : 'var(--hairline-stronger)'}`,
             borderRadius: 14, position: 'relative',
             display: 'flex', flexDirection: 'column', gap: 14,
           }}>
