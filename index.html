@@ -90,6 +90,18 @@
 
     ::selection { background: rgba(47, 95, 61, 0.25); color: var(--ink); }
 
+    /* Waitlist form placeholder — dark grey, legible. opacity: 1 defeats the
+       browser's default placeholder fade (Firefox applies ~0.54 opacity by
+       default). On-dark variant lives in WaitlistForm.jsx via the .on-dark
+       modifier. */
+    .echoe-waitlist-input::placeholder {
+      color: #333333;
+      opacity: 1;
+    }
+    .echoe-waitlist-input.on-dark::placeholder {
+      color: rgba(245, 241, 232, 0.6);
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.001ms !important;

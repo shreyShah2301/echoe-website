@@ -33,7 +33,6 @@ export default function WaitlistForm({ source = 'hero', onDark = false, ctaLabel
   const inputBg = onDark ? 'rgba(245,241,232,0.08)' : '#FFFFFF';
   const inputBorder = onDark ? 'rgba(245,241,232,0.25)' : 'var(--hairline-stronger)';
   const inputColor = onDark ? 'var(--ivory)' : 'var(--ink)';
-  const placeholderColor = onDark ? 'rgba(245,241,232,0.45)' : 'var(--dust)';
   const btnBg = 'var(--terracotta)';
   const btnColor = 'var(--ivory)';
   const helperColor = onDark ? 'rgba(245,241,232,0.65)' : 'var(--sepia)';
@@ -64,9 +63,6 @@ export default function WaitlistForm({ source = 'hero', onDark = false, ctaLabel
       display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center',
       maxWidth: 460,
     }}>
-      <style>{`
-        .echoe-waitlist-input::placeholder { color: ${placeholderColor}; }
-      `}</style>
       <input
         type="email"
         inputMode="email"
@@ -76,7 +72,7 @@ export default function WaitlistForm({ source = 'hero', onDark = false, ctaLabel
         value={email}
         onChange={(e) => { setEmail(e.target.value); if (status === 'error') setStatus('idle'); }}
         disabled={status === 'submitting'}
-        className="echoe-waitlist-input"
+        className={onDark ? 'echoe-waitlist-input on-dark' : 'echoe-waitlist-input'}
         style={{
           flex: '1 1 220px', minWidth: 220,
           padding: '14px 16px',
