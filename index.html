@@ -36,16 +36,19 @@
 
     section { padding: 120px 0; position: relative; }
     @media (max-width: 720px) { section { padding: 72px 0; } }
-    .container { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 32px; }
-    @media (max-width: 720px) { .container { padding: 0 22px; } }
+    .container { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 32px; box-sizing: border-box; }
+    @media (max-width: 720px) { .container { padding: 0 28px; } }
 
-    /* 2x2 on desktop, 1 col on mobile. Prevents an orphaned 4th card. */
+    /* 2x2 on desktop, 1 col on mobile. Prevents an orphaned 4th card.
+       minmax(0, 1fr) on mobile lets the column shrink below content
+       min-width — necessary because Card 2 contains a fixed-width HUD
+       (320px) that would otherwise push the card past the container. */
     .mechanic-grid {
       display: grid; gap: 16px;
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     @media (max-width: 720px) {
-      .mechanic-grid { grid-template-columns: 1fr; }
+      .mechanic-grid { grid-template-columns: minmax(0, 1fr); }
     }
 
     /* 4-up on desktop, 2x2 on tablet, stacked on mobile. */

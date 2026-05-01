@@ -13,6 +13,38 @@ entry here. Tag the commit (`git tag vX.Y.Z`) before pushing.
 
 ---
 
+## [1.4.5] — 2026-05-01
+
+Mechanic cards: symmetric mobile padding.
+
+### Fixed
+
+- **Mechanic Card 2 ("The HUD does the rest.") was overflowing the
+  container on mobile.** Card 2 contains a `<HUD>` widget with a fixed
+  `width: 320`. CSS `transform: scale(0.7)` shrinks the visual but
+  doesn't shrink the layout box, so the card needed at least
+  376px (320 HUD + 56 card padding) to lay out without overflow. On
+  iPhone viewports (~330–340px content area), the card overflowed the
+  right edge; `body { overflow-x: hidden }` clipped the visible
+  spillover, which produced the asymmetric "left has padding, right
+  has none" look in screenshots.
+
+### Changed
+
+- `.mechanic-grid` mobile column: `1fr` → `minmax(0, 1fr)` so the
+  column can shrink below the content's intrinsic min-width.
+- HUD wrapper in Mechanic Card 2 gets `width: 100%; overflow: hidden`
+  so the 320px HUD layout box clips visually instead of pushing the
+  card wider than its grid column.
+- Mobile container padding: `22px` → `28px` (more parchment band
+  visible on each side; small breathing-room bump that's now
+  matched left/right since the overflow root cause is fixed).
+- `.container` got an explicit `box-sizing: border-box` declaration
+  (the wildcard rule already covered it; defensive in case any mobile
+  browser respects element-level rules differently).
+
+---
+
 ## [1.4.4] — 2026-05-01
 
 Compact scenario picker on mobile.

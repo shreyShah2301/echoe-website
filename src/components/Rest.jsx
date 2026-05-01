@@ -36,7 +36,7 @@ export const MechanicSectionEN = () => (
           <div style={{ font: '400 14px/1.5 var(--font-ui)', color: 'var(--sepia)', marginBottom: 22 }}>
             Listening, transforming, inserted. Three states, one tiny window. Auto-dismisses when it's done.
           </div>
-          <div style={{ transform: 'scale(0.7)', transformOrigin: 'left top', height: 56 }}>
+          <div style={{ transform: 'scale(0.7)', transformOrigin: 'left top', height: 56, width: '100%', overflow: 'hidden' }}>
             <HUD state="listening" pair="EN · auto" metaRight="0:03" />
           </div>
         </Card>
