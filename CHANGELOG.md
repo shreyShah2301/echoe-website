@@ -13,6 +13,31 @@ entry here. Tag the commit (`git tag vX.Y.Z`) before pushing.
 
 ---
 
+## [1.4.2] — 2026-05-01
+
+Mobile nav fix.
+
+### Fixed
+
+- Nav was unviewable below ~720px: "How it works" wrapped mid-phrase
+  into 3 stacked lines, and "Get early access" overflowed the right
+  edge. Logo + 3 links + CTA can't fit ~330px of mobile width.
+
+### Changed
+
+- Nav refactored from inline-styled flex to class-based layout
+  (`.nav-row`, `.nav-actions`, `.nav-link`) so a media query can
+  collapse the link list on mobile.
+- Below 720px: the three nav links (Demo / How it works / Pricing)
+  hide via `display: none`. Logo + "Get early access" CTA remain
+  visible. Page is short enough that nav links aren't load-bearing
+  on mobile.
+- Nav row height: 64px → 56px on mobile, action gap 22px → 12px.
+- Added `white-space: nowrap` on links + CTA to prevent
+  mid-phrase wrapping at any viewport.
+
+---
+
 ## [1.4.1] — 2026-04-30
 
 Favicon rendering fix.

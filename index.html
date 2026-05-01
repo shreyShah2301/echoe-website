@@ -93,6 +93,28 @@
     }
     .nav.scrolled { border-bottom-color: var(--hairline); }
 
+    /* Nav layout — desktop default, mobile collapses to logo + CTA only. */
+    .nav-row {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; gap: 16px;
+    }
+    .nav-actions {
+      display: flex; align-items: center; gap: 22px;
+      min-width: 0;
+    }
+    .nav-link {
+      font: 400 14px/1 var(--font-ui);
+      color: var(--sepia);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-link:hover { color: var(--ink); }
+    @media (max-width: 720px) {
+      .nav-row { height: 56px; }
+      .nav-actions { gap: 12px; }
+      .nav-link { display: none; }
+    }
+
     ::selection { background: rgba(47, 95, 61, 0.25); color: var(--ink); }
 
     /* Waitlist form placeholder: dark grey, legible. opacity: 1 defeats the

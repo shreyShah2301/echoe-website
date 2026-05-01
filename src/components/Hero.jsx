@@ -19,16 +19,13 @@ export const NavEN = () => {
   }, []);
   return (
     <header className={`nav ${scrolled ? 'scrolled' : ''}`}>
-      <div className="container" style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        height: 64, gap: 16,
-      }}>
+      <div className="container nav-row">
         <EchoeMark height={32} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
-          <a href="#demo" style={{ font: '400 14px/1 var(--font-ui)', color: 'var(--sepia)', textDecoration: 'none' }}>Demo</a>
-          <a href="#how" style={{ font: '400 14px/1 var(--font-ui)', color: 'var(--sepia)', textDecoration: 'none' }}>How it works</a>
-          <a href="#pricing" style={{ font: '400 14px/1 var(--font-ui)', color: 'var(--sepia)', textDecoration: 'none' }}>Pricing</a>
-          <PrimaryButton size="md" onClick={scrollToWaitlist}>Get early access</PrimaryButton>
+        <div className="nav-actions">
+          <a className="nav-link" href="#demo">Demo</a>
+          <a className="nav-link" href="#how">How it works</a>
+          <a className="nav-link" href="#pricing">Pricing</a>
+          <PrimaryButton size="md" onClick={scrollToWaitlist} style={{ whiteSpace: 'nowrap' }}>Get early access</PrimaryButton>
         </div>
       </div>
     </header>
