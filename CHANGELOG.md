@@ -13,6 +13,29 @@ entry here. Tag the commit (`git tag vX.Y.Z`) before pushing.
 
 ---
 
+## [1.4.4] — 2026-05-01
+
+Compact scenario picker on mobile.
+
+### Changed
+
+- Demo section's scenario picker dominated mobile screen real estate:
+  4 buttons stacked single-column, each ~3 lines tall (app name +
+  title + subtitle). Felt like a wall of options before the actual
+  demo.
+- Refactored from inline-styled JSX to class-based markup
+  (`.scenario-picker`, `.scenario-btn`, `.scenario-tag-row`,
+  `.scenario-app`, `.scenario-title`, `.scenario-subtitle`,
+  `.is-active` modifier).
+- **Below 720px:** picker becomes a 2×2 grid; title and subtitle
+  hide via `display: none`; buttons are compact horizontal pills with
+  just AppTile + app name. Padding tightens (12×16 → 10×12), gap and
+  letter-spacing adjusted for the smaller scale.
+- **Above 720px:** unchanged — flex-wrap, full info per pill, 170px
+  min-width.
+
+---
+
 ## [1.4.3] — 2026-05-01
 
 Mobile polish: card borders, hero HUD on mobile, demo text persistence.

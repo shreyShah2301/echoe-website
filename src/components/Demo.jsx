@@ -330,23 +330,21 @@ export const DemoSectionEN = () => {
           </h2>
         </div>
 
-        <div style={{ marginTop: 40, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+        <div className="scenario-picker">
           {SCENARIOS_EN.map(s => {
             const on = s.id === scenarioId;
             return (
-              <button key={s.id} onClick={() => change(s.id)} style={{
-                background: on ? 'var(--ivory)' : 'transparent',
-                border: `0.5px solid ${on ? 'var(--ink)' : 'var(--hairline-stronger)'}`,
-                borderRadius: 12, padding: '12px 16px', cursor: 'pointer',
-                textAlign: 'left', display: 'flex', flexDirection: 'column', gap: 4,
-                color: 'var(--ink)', minWidth: 170,
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <button
+                key={s.id}
+                onClick={() => change(s.id)}
+                className={`scenario-btn ${on ? 'is-active' : ''}`}
+              >
+                <div className="scenario-tag-row">
                   <AppTile kind={s.app} size={12} />
-                  <span style={{ font: '500 10px/1 var(--font-ui)', letterSpacing: '0.14em', textTransform: 'uppercase', color: on ? 'var(--terracotta)' : 'var(--dust)' }}>{s.appName}</span>
+                  <span className={`scenario-app ${on ? 'is-active' : ''}`}>{s.appName}</span>
                 </div>
-                <span style={{ font: '500 14px/1.3 var(--font-ui)' }}>{s.title}</span>
-                <span style={{ font: '400 12px/1.3 var(--font-ui)', color: 'var(--sepia)' }}>{s.subtitle}</span>
+                <span className="scenario-title">{s.title}</span>
+                <span className="scenario-subtitle">{s.subtitle}</span>
               </button>
             );
           })}
