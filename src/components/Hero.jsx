@@ -237,6 +237,14 @@ export const HeroEN = () => {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
             <SpokenChip phase={phase} />
             <SlackComposerMock phase={phase} />
+            <div style={{ marginTop: -8 }}>
+              <HUD
+                state={hudStateForPhase(phase)}
+                title={hudTitleForPhase(phase)}
+                pair="हिंदी → EN"
+                metaRight={phase === 'settled' ? '✓' : '0:03'}
+              />
+            </div>
           </div>
         )}
       </div>

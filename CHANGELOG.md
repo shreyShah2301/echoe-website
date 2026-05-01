@@ -13,6 +13,33 @@ entry here. Tag the commit (`git tag vX.Y.Z`) before pushing.
 
 ---
 
+## [1.4.3] — 2026-05-01
+
+Mobile polish: card borders, hero HUD on mobile, demo text persistence.
+
+### Fixed
+
+- **Demo composer text disappeared at the "Inserted" state.** Root cause:
+  `useTypewriter` resets `shown` to `''` when `play` becomes false, which
+  fires during the `typing` → `settled` transition. Demo panels were
+  consuming `shown` directly, so the typed text vanished as soon as the
+  HUD flipped to ✓ Inserted. Fixed at the parent — the panels now receive
+  `phase === 'settled' ? scenario.output : shown`, mirroring the Hero's
+  existing workaround.
+- **Card right-side border invisible on mobile.** `Card` component used
+  `0.5px solid` borders that sub-pixel-rendered on small DPIs. Bumped to
+  `1px` so all four Mechanic cards have crisp, visible edges.
+
+### Added
+
+- **HUD render on the mobile hero.** The mobile branch in `HeroEN` now
+  renders the same `<HUD>` (Listening / Transforming / Inserted) as
+  desktop, synced to the Slack mock's `phase` state. Shows the canonical
+  product surface on mobile too. Pulled up `-8px` to overlap the Slack
+  composer's bottom edge for a connected-demo feel.
+
+---
+
 ## [1.4.2] — 2026-05-01
 
 Mobile nav fix.

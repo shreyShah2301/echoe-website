@@ -355,7 +355,7 @@ export const DemoSectionEN = () => {
         <div style={{ marginTop: 36, padding: '40px 24px', background: 'var(--ivory)', border: '0.5px solid var(--hairline)', borderRadius: 16 }}>
           <SpokenStripEN scenario={scenario} phase={phase} />
           <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-            <ScenarioPanel scenario={scenario} phase={phase} typed={shown} />
+            <ScenarioPanel scenario={scenario} phase={phase} typed={phase === 'settled' ? scenario.output : shown} />
             <div style={{ position: 'absolute', right: 'min(8%, 60px)', top: -28, zIndex: 2 }}>
               <HUD
                 state={phase === 'listening' ? 'listening' : phase === 'settled' ? 'inserted' : 'transforming'}

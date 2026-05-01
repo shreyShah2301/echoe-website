@@ -261,7 +261,7 @@ export const useTypewriter = (fullText, { speed = 28, pauseAt = [], play = true,
 export const Card = ({ children, tinted = false, style = {} }) => (
   <div style={{
     background: tinted ? 'var(--tint-terracotta-fill)' : 'var(--ivory)',
-    border: `0.5px solid ${tinted ? 'var(--tint-terracotta-border)' : 'var(--hairline-stronger)'}`,
+    border: `1px solid ${tinted ? 'var(--tint-terracotta-border)' : 'var(--hairline-stronger)'}`,
     borderRadius: 14, padding: 28, ...style,
   }}>{children}</div>
 );
