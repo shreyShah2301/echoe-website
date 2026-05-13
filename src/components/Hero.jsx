@@ -199,9 +199,6 @@ export const HeroEN = () => {
 
           <div style={{ marginTop: 36, display: 'flex', flexDirection: 'column', gap: 10 }}>
             <WaitlistForm source="hero" />
-            <div style={{ font: '400 13px/1.5 var(--font-ui)', color: 'var(--dust)' }}>
-              Join the waitlist · 5 free dictations a day
-            </div>
             <div style={{ font: '400 12px/1.5 var(--font-ui)', color: 'var(--dust)', marginTop: 4 }}>
               <div>Now in private beta · Apple Silicon + Intel · macOS 14+</div>
               <div>Pro from ₹399/mo.</div>

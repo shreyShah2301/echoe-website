@@ -80,7 +80,7 @@ export const MechanicSectionEN = () => (
 );
 
 const PRICES_EN = [
-  { id: 'free',  label: 'Free',          price: '₹0',     suffix: '',         tag: '5 dictations a day',           blurb: 'Enough to know whether Echoe is for you.' },
+  { id: 'free',  label: 'Free',          price: '₹0',     suffix: '',         tag: '14-day Pro trial',              blurb: 'Enough to know whether Echoe is for you.' },
   { id: 'week',  label: 'Pro · Weekly',  price: '₹100',   suffix: '/ week',   tag: 'Try it now',                    blurb: 'Full Pro, billed weekly. The cheapest way to see if it sticks.' },
   { id: 'month', label: 'Pro · Monthly', price: '₹399',   suffix: '/ month',  tag: '₹13 / day. Less than a chai.',  blurb: 'The default. For anyone using Echoe daily.', highlight: true },
   { id: 'year',  label: 'Pro · Yearly',  price: '₹3,999', suffix: '/ year',   tag: 'Roughly two months free',       blurb: 'Best value, billed once.' },
@@ -191,7 +191,7 @@ export const FinalCTAEN = () => (
         Stop typing. <span style={{ color: 'var(--terracotta-soft)' }}>Start speaking.</span>
       </h2>
       <p style={{ margin: '22px auto 0', maxWidth: 540, font: '400 17px/1.6 var(--font-ui)', color: 'rgba(245,241,232,0.7)' }}>
-        Free for 5 dictations a day. No credit card. macOS 14+.
+        No credit card. macOS 14+.
       </p>
       <div style={{ marginTop: 36, display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
         <WaitlistForm source="final-cta" onDark />
