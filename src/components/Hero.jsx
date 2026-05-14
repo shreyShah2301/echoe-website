@@ -1,14 +1,9 @@
 // Echoe Landing EN: Hero + Nav
 
 import { useState, useEffect } from 'react';
-import { EchoeMark, PrimaryButton, Kbd, PulseOrb, AppTile, HUD, useTypewriter } from './Shared.jsx';
+import { EchoeMark, Kbd, PulseOrb, AppTile, HUD, useTypewriter } from './Shared.jsx';
 import WaitlistForm from './WaitlistForm.jsx';
 
-
-const scrollToWaitlist = () => {
-  const el = document.getElementById('waitlist');
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-};
 
 export const NavEN = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -25,7 +20,21 @@ export const NavEN = () => {
           <a className="nav-link" href="#demo">Demo</a>
           <a className="nav-link" href="#how">How it works</a>
           <a className="nav-link" href="#pricing">Pricing</a>
-          <PrimaryButton size="md" onClick={scrollToWaitlist} style={{ whiteSpace: 'nowrap' }}>Get early access</PrimaryButton>
+          <a
+            href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.0/Echoe-1.0.dmg"
+            download
+            style={{
+              background: 'transparent',
+              color: 'var(--terracotta)',
+              border: '1px solid var(--terracotta)',
+              borderRadius: 999,
+              padding: '11px 20px',
+              font: '500 13px/1 var(--font-ui)',
+              letterSpacing: '-0.005em',
+              textDecoration: 'none',
+              whiteSpace: 'nowrap',
+            }}
+          >Download</a>
         </div>
       </div>
     </header>
@@ -198,9 +207,30 @@ export const HeroEN = () => {
           </p>
 
           <div style={{ marginTop: 36, display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <a
+              href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.0/Echoe-1.0.dmg"
+              download
+              style={{
+                alignSelf: 'flex-start',
+                background: 'var(--terracotta)',
+                color: 'var(--ivory)',
+                borderRadius: 999,
+                padding: '14px 24px',
+                font: '500 15px/1 var(--font-ui)',
+                letterSpacing: '-0.005em',
+                textDecoration: 'none',
+              }}
+            >
+              Download for Mac
+            </a>
+            <div style={{ font: '400 12px/1.5 var(--font-ui)', color: 'var(--dust)' }}>
+              macOS 14+ · Apple Silicon and Intel
+            </div>
+            <div style={{ font: '400 13px/1.5 var(--font-ui)', color: 'var(--sepia)', marginTop: 8 }}>
+              Prefer to wait? Join the waitlist for updates.
+            </div>
             <WaitlistForm source="hero" />
             <div style={{ font: '400 12px/1.5 var(--font-ui)', color: 'var(--dust)', marginTop: 4 }}>
-              <div>Now in private beta · Apple Silicon + Intel · macOS 14+</div>
               <div>Pro from ₹399/mo.</div>
             </div>
           </div>

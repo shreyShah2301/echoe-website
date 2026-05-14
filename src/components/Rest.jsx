@@ -190,10 +190,28 @@ export const FinalCTAEN = () => (
       <h2 style={{ margin: '20px auto 0', maxWidth: 820, font: '500 clamp(36px, 5.5vw, 60px)/1.05 var(--font-ui)', letterSpacing: '-0.03em', color: 'var(--ivory)', textWrap: 'balance' }}>
         Stop typing. <span style={{ color: 'var(--terracotta-soft)' }}>Start speaking.</span>
       </h2>
-      <p style={{ margin: '22px auto 0', maxWidth: 540, font: '400 17px/1.6 var(--font-ui)', color: 'rgba(245,241,232,0.7)' }}>
-        No credit card. macOS 14+.
-      </p>
-      <div style={{ marginTop: 36, display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
+      <div style={{ marginTop: 36, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+        <a
+          href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.0/Echoe-1.0.dmg"
+          download
+          style={{
+            background: 'var(--terracotta)',
+            color: 'var(--ivory)',
+            borderRadius: 999,
+            padding: '14px 24px',
+            font: '500 15px/1 var(--font-ui)',
+            letterSpacing: '-0.005em',
+            textDecoration: 'none',
+          }}
+        >
+          Download for Mac
+        </a>
+        <div style={{ font: '400 12px/1.5 var(--font-ui)', color: 'rgba(245,241,232,0.55)' }}>
+          macOS 14+ · Apple Silicon and Intel
+        </div>
+        <div style={{ font: '400 13px/1.5 var(--font-ui)', color: 'rgba(245,241,232,0.65)', marginTop: 8 }}>
+          Prefer to wait? Join the waitlist for updates.
+        </div>
         <WaitlistForm source="final-cta" onDark />
       </div>
       <div style={{ marginTop: 24, display: 'inline-flex', gap: 8, alignItems: 'center', font: '400 13px/1 var(--font-ui)', color: 'rgba(245,241,232,0.55)' }}>
