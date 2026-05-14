@@ -3,7 +3,7 @@
 import { NavEN, HeroEN } from './components/Hero.jsx';
 import { DemoSectionEN } from './components/Demo.jsx';
 import { WedgeSectionEN } from './components/Wedge.jsx';
-import { MechanicSectionEN, PricingSectionEN, FAQSectionEN, FinalCTAEN, FooterEN } from './components/Rest.jsx';
+import { MechanicSectionEN, PricingSectionEN, FAQSectionEN, FinalCTAEN, ContactSectionEN, FooterEN } from './components/Rest.jsx';
 
 export default function App() {
   return (
@@ -16,6 +16,7 @@ export default function App() {
       <PricingSectionEN />
       <FAQSectionEN />
       <FinalCTAEN />
+      <ContactSectionEN />
       <FooterEN />
     </>
   );

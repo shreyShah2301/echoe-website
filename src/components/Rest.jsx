@@ -3,6 +3,32 @@
 import { useState } from 'react';
 import { Card, Kbd, HUD, AppTile, EchoeMark } from './Shared.jsx';
 
+const IconWhatsApp = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"
+    style={{ display: 'block', flexShrink: 0 }}>
+    <path d="M8 1.5C4.41 1.5 1.5 4.19 1.5 7.5c0 1.1.3 2.14.83 3.03L1.5 14.5l4.09-1.06A6.46 6.46 0 0 0 8 13.5c3.59 0 6.5-2.69 6.5-6s-2.91-6-6.5-6z"
+      stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
+    <path d="M5.75 7.25c.22.7.7 1.35 1.5 1.85.62.38 1.3.52 1.9.45"
+      stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+  </svg>
+);
+
+const IconEmail = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"
+    style={{ display: 'block', flexShrink: 0 }}>
+    <rect x="1.5" y="3.5" width="13" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+    <path d="M1.5 5.5L8 10l6.5-4.5" stroke="currentColor" strokeWidth="1.4"
+      strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const IconX = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"
+    style={{ display: 'block', flexShrink: 0 }}>
+    <path d="M2.5 2.5L13.5 13.5M13.5 2.5L2.5 13.5"
+      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
 
 export const MechanicSectionEN = () => (
   <section style={{ background: 'var(--parchment)' }}>
@@ -183,6 +209,59 @@ export const FAQSectionEN = () => (
   </section>
 );
 
+export const ContactSectionEN = () => (
+  <section style={{ background: 'var(--ivory)' }}>
+    <div className="container">
+      <div style={{ maxWidth: 620 }}>
+        <div className="eyebrow">Questions or feedback</div>
+        <h2 className="h2" style={{ marginTop: 14 }}>Reach out anytime.</h2>
+        <p className="lede" style={{ marginTop: 18 }}>
+          I'm one person building Echoe. If something breaks, doesn't make sense,
+          or you just want to share what worked — message me directly. Brutal honesty welcome.
+        </p>
+      </div>
+      <div style={{ marginTop: 36, display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+        <a
+          href="https://wa.me/917023785120"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            background: 'var(--terracotta)', color: 'var(--ivory)',
+            borderRadius: 999, padding: '14px 24px',
+            font: '500 15px/1 var(--font-ui)', letterSpacing: '-0.005em',
+            textDecoration: 'none',
+          }}
+        ><IconWhatsApp />Message on WhatsApp</a>
+        <a
+          href="mailto:developer@echoeapp.com"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            background: 'transparent', color: 'var(--terracotta)',
+            border: '1px solid var(--terracotta)',
+            borderRadius: 999, padding: '14px 24px',
+            font: '500 15px/1 var(--font-ui)', letterSpacing: '-0.005em',
+            textDecoration: 'none',
+          }}
+        ><IconEmail />Email</a>
+        <a
+          href="https://x.com/shreyshah2301"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            background: 'transparent', color: 'var(--terracotta)',
+            border: '1px solid var(--terracotta)',
+            borderRadius: 999, padding: '14px 24px',
+            font: '500 15px/1 var(--font-ui)', letterSpacing: '-0.005em',
+            textDecoration: 'none',
+          }}
+        ><IconX />DM on X</a>
+      </div>
+    </div>
+  </section>
+);
+
 export const FinalCTAEN = () => (
   <section style={{ background: 'var(--ink)', color: 'var(--ivory)', padding: '120px 0' }}>
     <div className="container" style={{ textAlign: 'center' }}>
@@ -217,18 +296,52 @@ export const FinalCTAEN = () => (
   </section>
 );
 
+const footerLinkStyle = {
+  color: 'var(--sepia)', textDecoration: 'none',
+  display: 'inline-flex', alignItems: 'center', gap: 6,
+  transition: 'color 120ms var(--ease-default)',
+};
+const onHover   = (e) => { e.currentTarget.style.color = 'var(--terracotta)'; };
+const onUnhover = (e) => { e.currentTarget.style.color = 'var(--sepia)'; };
+
 export const FooterEN = () => (
-  <footer style={{ background: 'var(--ink)', color: 'rgba(245,241,232,0.6)', padding: '40px 0', borderTop: '0.5px solid rgba(245,241,232,0.08)' }}>
-    <div className="container" style={{ display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between', font: '400 12px/1.5 var(--font-ui)' }}>
+  <footer style={{
+    background: 'var(--parchment)',
+    borderTop: '0.5px solid var(--hairline)',
+    padding: '28px 0',
+  }}>
+    <div className="container" style={{
+      display: 'flex', flexWrap: 'wrap', gap: 20,
+      alignItems: 'center', justifyContent: 'space-between',
+      font: '400 13px/1.5 var(--font-ui)',
+    }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
-        <EchoeMark height={28} variant="cream" />
-        <span style={{ fontStyle: 'italic' }}>Don't whisper when you can echo your thoughts with confidence.</span>
+        <EchoeMark height={28} />
+        <span style={{ color: 'var(--dust)', fontStyle: 'italic' }}>
+          Don't whisper when you can echo your thoughts with confidence.
+        </span>
       </div>
-      <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap' }}>
-        <a href="/privacy" style={{ color: 'inherit', textDecoration: 'none' }}>Privacy</a>
-        <a href="/terms" style={{ color: 'inherit', textDecoration: 'none' }}>Terms</a>
-        <a href="mailto:hello@echoeapp.com" style={{ color: 'inherit', textDecoration: 'none' }}>Contact</a>
-        <span>©2026</span>
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 16 }}>
+        <a href="https://wa.me/917023785120" target="_blank" rel="noopener noreferrer"
+          style={footerLinkStyle} onMouseEnter={onHover} onMouseLeave={onUnhover}>
+          <IconWhatsApp />WhatsApp
+        </a>
+        <span style={{ color: 'var(--hairline-strong)' }}>·</span>
+        <a href="mailto:developer@echoeapp.com"
+          style={footerLinkStyle} onMouseEnter={onHover} onMouseLeave={onUnhover}>
+          <IconEmail />developer@echoeapp.com
+        </a>
+        <span style={{ color: 'var(--hairline-strong)' }}>·</span>
+        <a href="https://x.com/shreyshah2301" target="_blank" rel="noopener noreferrer"
+          style={footerLinkStyle} onMouseEnter={onHover} onMouseLeave={onUnhover}>
+          <IconX />@shreyshah2301
+        </a>
+        <span style={{ color: 'var(--hairline-strong)' }}>·</span>
+        <a href="/privacy" style={footerLinkStyle} onMouseEnter={onHover} onMouseLeave={onUnhover}>Privacy</a>
+        <span style={{ color: 'var(--hairline-strong)' }}>·</span>
+        <a href="/terms" style={footerLinkStyle} onMouseEnter={onHover} onMouseLeave={onUnhover}>Terms</a>
+        <span style={{ color: 'var(--dust)' }}>·</span>
+        <span style={{ color: 'var(--dust)' }}>©2026</span>
       </div>
     </div>
   </footer>
