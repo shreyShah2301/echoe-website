@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Card, Kbd, HUD, AppTile, EchoeMark } from './Shared.jsx';
-import WaitlistForm from './WaitlistForm.jsx';
+
 
 export const MechanicSectionEN = () => (
   <section style={{ background: 'var(--parchment)' }}>
@@ -209,10 +209,6 @@ export const FinalCTAEN = () => (
         <div style={{ font: '400 12px/1.5 var(--font-ui)', color: 'rgba(245,241,232,0.55)' }}>
           macOS 14+ · Apple Silicon and Intel
         </div>
-        <div style={{ font: '400 13px/1.5 var(--font-ui)', color: 'rgba(245,241,232,0.65)', marginTop: 8 }}>
-          Prefer to wait? Join the waitlist for updates.
-        </div>
-        <WaitlistForm source="final-cta" onDark />
       </div>
       <div style={{ marginTop: 24, display: 'inline-flex', gap: 8, alignItems: 'center', font: '400 13px/1 var(--font-ui)', color: 'rgba(245,241,232,0.55)' }}>
         <Kbd onDark size={11}>right ⌘</Kbd><span>Hold to dictate</span>
