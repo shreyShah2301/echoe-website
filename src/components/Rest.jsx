@@ -80,7 +80,7 @@ export const MechanicSectionEN = () => (
 );
 
 const PRICES_EN = [
-  { id: 'free',  label: 'Free',          price: '₹0',     suffix: '',         tag: '14-day Pro trial',              blurb: 'Enough to know whether Echoe is for you.' },
+  { id: 'free',  label: 'Free',          price: '₹0',     suffix: '',         tag: '14-day Pro, free forever',      blurb: '5 dictations a day, free forever after the trial.' },
   { id: 'week',  label: 'Pro · Weekly',  price: '₹100',   suffix: '/ week',   tag: 'Try it now',                    blurb: 'Full Pro, billed weekly. The cheapest way to see if it sticks.' },
   { id: 'month', label: 'Pro · Monthly', price: '₹399',   suffix: '/ month',  tag: '₹13 / day. Less than a chai.',  blurb: 'The default. For anyone using Echoe daily.', highlight: true },
   { id: 'year',  label: 'Pro · Yearly',  price: '₹3,999', suffix: '/ year',   tag: 'Roughly two months free',       blurb: 'Best value, billed once.' },
