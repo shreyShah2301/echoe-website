@@ -216,8 +216,8 @@ export const ContactSectionEN = () => (
         <div className="eyebrow">Questions or feedback</div>
         <h2 className="h2" style={{ marginTop: 14 }}>Reach out anytime.</h2>
         <p className="lede" style={{ marginTop: 18 }}>
-          I'm one person building Echoe. If something breaks, doesn't make sense,
-          or you just want to share what worked — message me directly. Brutal honesty welcome.
+          If something breaks, doesn't make sense,
+          or you just want to share what worked — reachout directly. Brutal honesty welcome.
         </p>
       </div>
       <div style={{ marginTop: 36, display: 'flex', flexWrap: 'wrap', gap: 12 }}>
