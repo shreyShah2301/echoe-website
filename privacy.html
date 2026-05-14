@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Privacy · Echoe</title>
+  <meta name="description" content="What Echoe stores, and where. Your dictation text lives on your Mac only — we have no access to it.">
+  <link rel="canonical" href="https://echoeapp.com/privacy">
+  <link rel="icon" type="image/svg+xml" sizes="16x16" href="/favicon.svg">
+  <link rel="icon" type="image/svg+xml" sizes="32x32" href="/favicon-32.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body { background: var(--ivory); color: var(--ink); overflow-x: hidden; }
+    *, *::before, *::after { box-sizing: border-box; }
+    .container { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 32px; box-sizing: border-box; }
+    @media (max-width: 720px) { .container { padding: 0 28px; } }
+    .eyebrow { font: 500 11px/1.4 var(--font-ui); letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); }
+    ::selection { background: rgba(47, 95, 61, 0.25); color: var(--ink); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/privacy.jsx"></script>
+</body>
+</html>

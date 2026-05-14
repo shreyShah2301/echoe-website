@@ -163,7 +163,7 @@ export const PricingSectionEN = () => (
 const FAQ_ITEMS_EN = [
   {
     q: 'Is my audio sent to a server?',
-    a: "Audio is processed by Sarvam (our ASR provider) for transcription, then immediately discarded. Your audio is never stored. Transcripts stay on your Mac unless you export them.",
+    a: <>Audio is briefly stored on our servers for up to one hour to enable retries and quality monitoring, then automatically deleted. We never read its contents — it exists only to be processed by Sarvam AI for transcription. Full details on our <a href="/privacy" style={{ color: 'var(--terracotta)', textDecoration: 'none' }}>Privacy page</a>.</>,
   },
   {
     q: 'Does this work in WhatsApp Web?',
@@ -176,6 +176,14 @@ const FAQ_ITEMS_EN = [
   {
     q: 'Does Echoe train AI on my data?',
     a: "No. Your transcripts are not used to train any model, ours or third-party. See our privacy page for details.",
+  },
+  {
+    q: 'Where does my dictation text live?',
+    a: "On your Mac, in a local database that only your macOS account can read. (Technical readers: full path is ~/Library/Application Support/Echoe/echoe.sqlite.) The transcript and polished output travel from our server to your Mac in the HTTP response and are never written to our database. Our server only records metadata: duration, language detected, and whether the request succeeded.",
+  },
+  {
+    q: 'Can the Echoe team read my dictations?',
+    a: "No. We have no access to dictation text — not even for our own beta testers. Our server logs contain timestamps, durations, and error codes, never what you said. The only copy of your dictations is on your own Mac.",
   },
 ];
 
