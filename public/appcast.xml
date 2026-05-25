@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Echoe appcast — consumed by Sparkle for in-app auto-updates.
+  Hosted at: https://echoeapp.com/appcast.xml
+
+  To publish a release:
+    1. Build + notarize via scripts/release-notarized.sh (outputs DMG + SHA256)
+    2. Upload DMG as a GitHub Release asset:
+         https://github.com/shreyShah2301/echoe-website/releases/download/vX.Y.Z/Echoe-X.Y.Z.dmg
+    3. Run: sign_update --ed-key-file ~/.sparkle/echoe_ed_key dist/Echoe-X.Y.Z.dmg
+    4. Copy sparkle:edSignature and length from sign_update output into <enclosure>
+    5. Bump sparkle:version (CFBundleVersion integer) and sparkle:shortVersionString
+    6. git commit + push -> Vercel deploys the updated appcast
+-->
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>Echoe</title>
+    <link>https://echoeapp.com/appcast.xml</link>
+    <item>
+      <title>Echoe 1.1.1</title>
+      <pubDate>Sun, 25 May 2026 00:00:00 +0000</pubDate>
+      <enclosure
+        url="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.1/Echoe-1.1.1.dmg"
+        sparkle:version="2"
+        sparkle:shortVersionString="1.1.1"
+        sparkle:edSignature="CVONzi1ZL4KM588kYlbXHdL/TTIo2JsPoYISSvx6ZhXyO1f5fdTMECriNSpc/DOmBYrGhZcDj56fxm6FPu7OBQ=="
+        length="6450602"
+        type="application/octet-stream"
+      />
+    </item>
+  </channel>
+</rss>
