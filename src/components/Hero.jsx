@@ -21,7 +21,7 @@ export const NavEN = () => {
           <a className="nav-link" href="#how">How it works</a>
           <a className="nav-link" href="#pricing">Pricing</a>
           <a
-            href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.1/Echoe-1.1.1.dmg"
+            href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.2/Echoe-1.1.2.dmg"
             download
             style={{
               background: 'transparent',
@@ -208,7 +208,7 @@ export const HeroEN = () => {
 
           <div style={{ marginTop: 36, display: 'flex', flexDirection: 'column', gap: 10 }}>
             <a
-              href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.1/Echoe-1.1.1.dmg"
+              href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.2/Echoe-1.1.2.dmg"
               download
               style={{
                 alignSelf: 'flex-start',
