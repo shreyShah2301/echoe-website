@@ -17,6 +17,18 @@
     <title>Echoe</title>
     <link>https://echoeapp.com/appcast.xml</link>
     <item>
+      <title>Echoe 1.1.3</title>
+      <pubDate>Mon, 02 Jun 2026 00:00:00 +0000</pubDate>
+      <enclosure
+        url="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.3/Echoe-1.1.3.dmg"
+        sparkle:version="4"
+        sparkle:shortVersionString="1.1.3"
+        sparkle:edSignature="d/LNj+pohJ3MxnjTmSQqhN5NHWU85nbWjdoe3C/iJ5/NPTgXT+HFsDaKAi1nOhgeDt85AdjFZ41LgufR8eEGBA=="
+        length="6459038"
+        type="application/octet-stream"
+      />
+    </item>
+    <item>
       <title>Echoe 1.1.2</title>
       <pubDate>Mon, 26 May 2026 00:00:00 +0000</pubDate>
       <enclosure

@@ -279,7 +279,7 @@ export const FinalCTAEN = () => (
       </h2>
       <div style={{ marginTop: 36, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
         <a
-          href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.2/Echoe-1.1.2.dmg"
+          href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.3/Echoe-1.1.3.dmg"
           download
           style={{
             background: 'var(--terracotta)',
