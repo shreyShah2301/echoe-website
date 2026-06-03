@@ -168,7 +168,19 @@ const hudTitleForPhase = (phase) => {
 };
 
 export const HeroEN = () => {
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 720;
+  // SSR-safe responsive flag. This site is pre-rendered (SSG) with no `window`
+  // at build time, so computing this inline baked the DESKTOP layout into the
+  // static HTML — on phones the two-column grid squeezed the Slack mock off the
+  // right edge (and inline derivation never re-rendered to correct it). Start
+  // false (matches the prerender → no hydration mismatch), then resolve the real
+  // value after mount and on resize.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 720);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   // Single source of truth for the demo cycle. SlackComposerMock + HUD
   // both read this, so they animate as one demo, not two separate widgets.
