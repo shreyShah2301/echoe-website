@@ -193,7 +193,7 @@ const FAQItemEN = ({ q, a, defaultOpen = false }) => {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div style={{ borderTop: '0.5px solid var(--hairline)', padding: '20px 0' }}>
-      <button onClick={() => setOpen(!open)} aria-expanded={open} style={{ all: 'unset', cursor: 'pointer', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
+      <button onClick={() => setOpen(!open)} aria-expanded={open} style={{ all: 'unset', cursor: 'pointer', width: '100%', minHeight: 44, boxSizing: 'border-box', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
         <span style={{ font: '500 18px/1.4 var(--font-ui)', color: 'var(--ink)', letterSpacing: '-0.01em' }}>{q}</span>
         <span style={{ font: '400 22px/1 var(--font-ui)', color: 'var(--dust)', transform: open ? 'rotate(45deg)' : 'rotate(0)', transition: 'transform 200ms var(--ease-default)', flexShrink: 0 }}>+</span>
       </button>
@@ -383,6 +383,7 @@ export const FinalCTAEN = () => (
 const footerLinkStyle = {
   color: 'var(--sepia)', textDecoration: 'none',
   display: 'inline-flex', alignItems: 'center', gap: 6,
+  padding: '12px 0', // ≥44px touch target on mobile without altering the row layout
   transition: 'color 120ms var(--ease-default)',
 };
 const onHover   = (e) => { e.currentTarget.style.color = 'var(--terracotta)'; };

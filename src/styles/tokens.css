@@ -101,21 +101,26 @@ html, body {
 .wedge-elevated { box-shadow: 0 12px 36px rgba(28, 26, 21, 0.10), 0 3px 10px rgba(28, 26, 21, 0.05); }
 .wedge-recessed { opacity: 0.85; --reveal-rest: 0.85; }
 
-/* Pricing (item E): hover lift on all cards; resting elevation on the popular one. */
+/* Pricing (item E): resting elevation on the popular card; hover lift below. */
 .price-card { transition: transform var(--dur-fast) var(--ease-default), box-shadow var(--dur-fast) var(--ease-default); }
-.price-card:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(28, 26, 21, 0.12); }
 .price-card-pop { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(28, 26, 21, 0.20); }
-.price-card-pop:hover { transform: translateY(-6px); box-shadow: 0 22px 50px rgba(28, 26, 21, 0.24); }
 
-/* Keycaps (item F): physical depth + 1px press on hover. */
+/* Keycaps (item F): physical depth; press-in on hover below. */
 .keycap { box-shadow: 0 1.5px 0 0 var(--hairline-stronger); transition: transform var(--dur-fast) var(--ease-default), box-shadow var(--dur-fast) var(--ease-default); }
-.keycap:hover { transform: translateY(1px); box-shadow: 0 0.5px 0 0 var(--hairline-stronger); }
 .keycap-on-dark { box-shadow: 0 1.5px 0 0 rgba(0, 0, 0, 0.35); }
-.keycap-on-dark:hover { transform: translateY(1px); box-shadow: 0 0.5px 0 0 rgba(0, 0, 0, 0.35); }
 
-/* Primary CTA lift (item F). */
+/* Primary CTA lift (item F): transition here; lift on hover below. */
 .btn-lift { transition: transform var(--dur-fast) var(--ease-default), filter var(--dur-fast) var(--ease-default); }
-.btn-lift:hover { transform: translateY(-1px); filter: brightness(0.96); }
+
+/* Hover-only effects, gated so a touch tap can't leave them stuck in the
+   hovered state on phones/tablets (Pass 3, item C). */
+@media (hover: hover) {
+  .price-card:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(28, 26, 21, 0.12); }
+  .price-card-pop:hover { transform: translateY(-6px); box-shadow: 0 22px 50px rgba(28, 26, 21, 0.24); }
+  .keycap:hover { transform: translateY(1px); box-shadow: 0 0.5px 0 0 var(--hairline-stronger); }
+  .keycap-on-dark:hover { transform: translateY(1px); box-shadow: 0 0.5px 0 0 rgba(0, 0, 0, 0.35); }
+  .btn-lift:hover { transform: translateY(-1px); filter: brightness(0.96); }
+}
 
 /* Scenario switcher (item B): fade-in-slide on swap + active-tab dwell progress. */
 @keyframes scenario-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }

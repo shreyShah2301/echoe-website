@@ -413,14 +413,16 @@ export const DemoSectionEN = () => {
           <SpokenStripEN scenario={scenario} phase={phase} />
           <div key={scenarioId} className={swapped ? 'scenario-swap' : undefined} style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
             <ScenarioPanel scenario={scenario} phase={phase} typed={phase === 'settled' ? scenario.output : shown} />
-            <div style={{ position: 'absolute', right: 'min(8%, 60px)', top: -28, zIndex: 2 }}>
-              <HUD
-                state={phase === 'listening' ? 'listening' : phase === 'settled' ? 'inserted' : 'transforming'}
-                pair={scenario.pair}
-                metaRight={phase === 'settled' ? '✓' : '0:04'}
-                title={phase === 'settled' ? 'Inserted.' : phase === 'listening' ? 'Listening.' : 'Transforming…'}
-                style={{ width: 280, transform: 'scale(0.92)' }}
-              />
+            <div className="demo-hud" style={{ position: 'absolute', right: 'min(8%, 60px)', top: -28, zIndex: 2 }}>
+              <div className="demo-hud-inner">
+                <HUD
+                  state={phase === 'listening' ? 'listening' : phase === 'settled' ? 'inserted' : 'transforming'}
+                  pair={scenario.pair}
+                  metaRight={phase === 'settled' ? '✓' : '0:04'}
+                  title={phase === 'settled' ? 'Inserted.' : phase === 'listening' ? 'Listening.' : 'Transforming…'}
+                  style={{ width: 280 }}
+                />
+              </div>
             </div>
           </div>
           <div style={{ marginTop: 28, display: 'flex', justifyContent: 'center' }}>

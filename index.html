@@ -128,6 +128,31 @@
     .container { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 32px; box-sizing: border-box; }
     @media (max-width: 720px) { .container { padding: 0 28px; } }
 
+    /* Hero layout. Pure CSS so there is nothing to mismatch between the
+       prerendered (desktop) HTML and client hydration — replaces the old
+       JS isMobile branch (Pass 3, item A). overflow:hidden clips the scaled
+       HUD's transparent layout box on narrow screens. */
+    .hero-section { padding: 64px 0 80px; overflow: hidden; }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.05fr 1fr;
+      gap: 56px; align-items: center;
+    }
+    .hero-demo-col {
+      display: flex; flex-direction: column; align-items: flex-end;
+      gap: 12px; width: 100%; min-width: 0;
+    }
+    .hero-divider { margin-top: 96px; border-top: 0.5px solid var(--hairline); }
+    @media (max-width: 720px) {
+      .hero-section { padding: 40px 0 60px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+      .hero-demo-col { align-items: center; }
+      .hero-divider { margin-top: 80px; }
+      /* Fixed-width (320px) HUD would overrun a ~304px column at 360px; scale
+         it to fit. transform doesn't shrink the layout box, but the section's
+         overflow:hidden clips the transparent margins (Pass 3, item B2). */
+      .hero-hud { transform: scale(0.86); transform-origin: top center; }
+    }
+
     /* 2x2 on desktop, 1 col on mobile. Prevents an orphaned 4th card.
        minmax(0, 1fr) on mobile lets the column shrink below content
        min-width — necessary because Card 2 contains a fixed-width HUD
@@ -150,6 +175,18 @@
     }
     @media (max-width: 540px) {
       .pricing-grid { grid-template-columns: 1fr; }
+      /* Stack the "Most popular" card first without touching DOM order, so
+         desktop layout + reading order stay intact (Pass 3, item B4). */
+      .price-card-pop { order: -1; }
+    }
+
+    /* Demo's decorative floating HUD. Desktop scale lives here (not inline) so
+       the mobile media query can shrink it and re-anchor to the card's top-right
+       corner, keeping it inside the simulated app at 360px (Pass 3 finding). */
+    .demo-hud-inner { transform: scale(0.92); }
+    @media (max-width: 720px) {
+      .demo-hud { right: 4px !important; }
+      .demo-hud-inner { transform: scale(0.66); transform-origin: top right; }
     }
 
     /* Demo scenario picker. Desktop: free-flowing pills, full info.
@@ -192,31 +229,26 @@
       color: var(--sepia);
     }
     @media (max-width: 720px) {
+      /* Horizontally scrollable, snap-aligned row (Pass 3, item B1). Bleeds to
+         the screen edges via negative margins so it reads as scrollable; its own
+         overflow-x:auto means it never pushes the page wide. Scrollbar hidden. */
       .scenario-picker {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
+        display: flex; flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 10px;
+        margin-left: -28px; margin-right: -28px;
+        padding: 4px 28px;
       }
+      .scenario-picker::-webkit-scrollbar { display: none; }
       .scenario-btn {
-        min-width: 0;
-        padding: 10px 12px;
-        flex-direction: row;
-        align-items: center;
-        gap: 8px;
-      }
-      .scenario-tag-row {
-        flex: 1; min-width: 0;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .scenario-app {
-        font-size: 11px;
-        letter-spacing: 0.1em;
-      }
-      .scenario-title,
-      .scenario-subtitle {
-        display: none;
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+        min-width: 152px;
+        min-height: 44px;
+        padding: 12px 14px;
       }
     }
 

@@ -20,6 +20,8 @@ export const NavEN = () => {
             download
             rel="noopener noreferrer"
             style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              minHeight: 44, boxSizing: 'border-box',
               background: 'transparent',
               color: 'var(--terracotta)',
               border: '1px solid var(--terracotta)',
@@ -64,6 +66,8 @@ export const StickyBarEN = () => {
           rel="noopener noreferrer"
           tabIndex={visible ? 0 : -1}
           style={{
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+            minHeight: 44, boxSizing: 'border-box',
             background: 'var(--terracotta)',
             color: 'var(--ivory)',
             borderRadius: 999,
@@ -206,19 +210,11 @@ const hudTitleForPhase = (phase) => {
 };
 
 export const HeroEN = () => {
-  // SSR-safe responsive flag. This site is pre-rendered (SSG) with no `window`
-  // at build time, so computing this inline baked the DESKTOP layout into the
-  // static HTML — on phones the two-column grid squeezed the Slack mock off the
-  // right edge (and inline derivation never re-rendered to correct it). Start
-  // false (matches the prerender → no hydration mismatch), then resolve the real
-  // value after mount and on resize.
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 720);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
+  // Layout is pure CSS (.hero-section / .hero-grid / .hero-demo-col, see
+  // index.html) rather than a JS isMobile flag. The old flag computed the
+  // breakpoint at render time, so the prerendered (no-window) HTML always baked
+  // the desktop layout and the client re-rendered to mobile after hydration —
+  // a hydration mismatch. CSS media queries have nothing to mismatch.
 
   // Single source of truth for the demo cycle. SlackComposerMock + HUD both read
   // this, so they animate as one demo, not two separate widgets. We mount on the
@@ -261,12 +257,8 @@ export const HeroEN = () => {
   }, []);
 
   return (
-    <section ref={heroRef} id="hero" style={{ padding: isMobile ? '40px 0 60px' : '64px 0 80px', overflow: 'hidden' }}>
-      <div className="container" style={{
-        display: 'grid',
-        gridTemplateColumns: isMobile ? '1fr' : '1.05fr 1fr',
-        gap: isMobile ? 36 : 56, alignItems: 'center',
-      }}>
+    <section ref={heroRef} id="hero" className="hero-section">
+      <div className="container hero-grid">
         <div>
           <div className="eyebrow">Built for Indian voices and languages</div>
           <h1 style={{
@@ -318,37 +310,21 @@ export const HeroEN = () => {
           </div>
         </div>
 
-        {!isMobile && (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 12 }}>
-            <SpokenChip phase={phase} />
-            <SlackComposerMock phase={phase} />
-            <div style={{ marginTop: -8, opacity: hudShown ? 1 : 0, transition: 'opacity 320ms var(--ease-default)' }}>
-              <HUD
-                state={hudStateForPhase(phase)}
-                title={hudTitleForPhase(phase)}
-                pair="हिंदी → EN"
-                metaRight={phase === 'settled' ? '✓' : '0:03'}
-              />
-            </div>
+        <div className="hero-demo-col">
+          <SpokenChip phase={phase} />
+          <SlackComposerMock phase={phase} />
+          <div className="hero-hud" style={{ marginTop: -8, opacity: hudShown ? 1 : 0, transition: 'opacity 320ms var(--ease-default)' }}>
+            <HUD
+              state={hudStateForPhase(phase)}
+              title={hudTitleForPhase(phase)}
+              pair="हिंदी → EN"
+              metaRight={phase === 'settled' ? '✓' : '0:03'}
+            />
           </div>
-        )}
-        {isMobile && (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-            <SpokenChip phase={phase} />
-            <SlackComposerMock phase={phase} />
-            <div style={{ marginTop: -8, opacity: hudShown ? 1 : 0, transition: 'opacity 320ms var(--ease-default)' }}>
-              <HUD
-                state={hudStateForPhase(phase)}
-                title={hudTitleForPhase(phase)}
-                pair="हिंदी → EN"
-                metaRight={phase === 'settled' ? '✓' : '0:03'}
-              />
-            </div>
-          </div>
-        )}
+        </div>
       </div>
 
-      <div style={{ marginTop: isMobile ? 80 : 96, borderTop: '0.5px solid var(--hairline)' }} />
+      <div className="hero-divider" />
     </section>
   );
 };
