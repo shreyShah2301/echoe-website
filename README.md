@@ -21,6 +21,19 @@ npm run build       # → dist/
 npm run preview     # serve dist/ locally
 ```
 
+## Deploy & domains
+
+Hosted on Vercel. **Domain-level redirect config lives in the Vercel dashboard, not in the
+repo** — `echoeapp.com` (apex) must stay the **primary** domain, with `www.echoeapp.com`
+redirecting to it. Vercel applies this at the edge *before* `vercel.json` is evaluated.
+
+> ⚠️ If `www` is ever set as primary with apex redirecting to it, the `www → apex` rule in
+> `vercel.json` will fight the dashboard rule and cause an **infinite redirect loop**. Keep
+> apex-primary in the dashboard.
+
+The `redirects` block in `vercel.json` is therefore redundant (the dashboard handles it) but
+is left in place to document intent — harmless as long as the dashboard stays apex-primary.
+
 ## Waitlist
 
 The hero + final-CTA forms POST to the `subscribe-waitlist` Supabase Edge
