@@ -283,11 +283,29 @@ const SpokenStripEN = ({ scenario, phase }) => {
 
 export const DemoSectionEN = () => {
   const [scenarioId, setScenarioId] = useState(SCENARIOS_EN[0].id);
-  const scenario = SCENARIOS_EN.find(s => s.id === scenarioId);
+  const scenarioIndex = SCENARIOS_EN.findIndex(s => s.id === scenarioId);
+  const scenario = SCENARIOS_EN[scenarioIndex];
   const [phase, setPhase] = useState('idle');
   const sectionRef = useRef(null);
-  const inView = useInView(sectionRef);
+  // once:false → we can pause the auto-advance carousel when it scrolls away.
+  const inView = useInView(sectionRef, { once: false });
   const [hasPlayed, setHasPlayed] = useState(false);
+  // auto-advance state. `auto` switches off permanently once the user picks a
+  // scenario; `paused` is the transient hover/touch/focus hold; `swapped` gates
+  // the crossfade so the prerendered first frame has no animation class; `dwell`
+  // drives the active-tab progress bar during the 3s settled hold.
+  const [auto, setAuto] = useState(true);
+  const [paused, setPaused] = useState(false);
+  const [swapped, setSwapped] = useState(false);
+  const [dwell, setDwell] = useState(false);
+  const tabRefs = useRef([]);
+
+  const goToPhase = (id, idleToListen = 250) => {
+    setScenarioId(id);
+    setSwapped(true);
+    setPhase('idle');
+    setTimeout(() => setPhase('listening'), idleToListen);
+  };
 
   useEffect(() => {
     if (!inView || phase !== 'idle' || hasPlayed) return;
@@ -311,33 +329,66 @@ export const DemoSectionEN = () => {
     onDone: () => setPhase('settled'),
   });
 
+  // Auto-advance: once a scenario settles, hold 3s (progress bar fills), then
+  // move to the next. Disabled under reduced motion, while paused, after a manual
+  // pick, or when the section is off-screen.
+  useEffect(() => {
+    if (phase !== 'settled' || !auto || paused || !inView ||
+        (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      setDwell(false);
+      return;
+    }
+    setDwell(true);
+    const t = setTimeout(() => {
+      setDwell(false);
+      const nextId = SCENARIOS_EN[(scenarioIndex + 1) % SCENARIOS_EN.length].id;
+      goToPhase(nextId);
+    }, 3000);
+    return () => clearTimeout(t);
+  }, [phase, auto, paused, inView, scenarioIndex]);
+
   const replay = () => {
+    setAuto(false);
     setPhase('idle');
     setTimeout(() => setPhase('listening'), 200);
   };
   const change = (id) => {
-    setScenarioId(id); setPhase('idle');
-    setTimeout(() => setPhase('listening'), 250);
+    setAuto(false);
+    goToPhase(id);
+  };
+  const onTabKeyDown = (e) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    const dir = e.key === 'ArrowRight' ? 1 : -1;
+    const ni = (scenarioIndex + dir + SCENARIOS_EN.length) % SCENARIOS_EN.length;
+    change(SCENARIOS_EN[ni].id);
+    tabRefs.current[ni]?.focus();
   };
 
   return (
     <section id="demo" ref={sectionRef} style={{ background: 'var(--parchment)' }}>
       <div className="container">
-        <div style={{ maxWidth: 720 }}>
+        <div className="reveal" style={{ maxWidth: 720 }}>
           <div className="eyebrow">One hotkey. Any app. Your thoughts in your language.</div>
           <h2 className="h2" style={{ marginTop: 14 }}>
             Pick a scenario. <span style={{ color: 'var(--terracotta)' }}>Watch it land.</span>
           </h2>
         </div>
 
-        <div className="scenario-picker">
-          {SCENARIOS_EN.map(s => {
+        <div className="scenario-picker" role="tablist" aria-label="Demo scenarios">
+          {SCENARIOS_EN.map((s, i) => {
             const on = s.id === scenarioId;
             return (
               <button
                 key={s.id}
+                ref={(el) => { tabRefs.current[i] = el; }}
+                role="tab"
+                aria-selected={on}
+                tabIndex={on ? 0 : -1}
                 onClick={() => change(s.id)}
+                onKeyDown={onTabKeyDown}
                 className={`scenario-btn ${on ? 'is-active' : ''}`}
+                style={{ position: 'relative' }}
               >
                 <div className="scenario-tag-row">
                   <AppTile kind={s.app} size={12} />
@@ -345,14 +396,22 @@ export const DemoSectionEN = () => {
                 </div>
                 <span className="scenario-title">{s.title}</span>
                 <span className="scenario-subtitle">{s.subtitle}</span>
+                {on && <span className={`scenario-progress ${dwell ? 'is-running' : ''}`} aria-hidden="true" />}
               </button>
             );
           })}
         </div>
 
-        <div style={{ marginTop: 36, padding: '40px 24px', background: 'var(--ivory)', border: '0.5px solid var(--hairline)', borderRadius: 16 }}>
+        <div
+          style={{ marginTop: 36, padding: '40px 24px', background: 'var(--ivory)', border: '0.5px solid var(--hairline)', borderRadius: 16 }}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocus={() => setPaused(true)}
+          onBlur={() => setPaused(false)}
+          onTouchStart={() => setPaused(true)}
+        >
           <SpokenStripEN scenario={scenario} phase={phase} />
-          <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
+          <div key={scenarioId} className={swapped ? 'scenario-swap' : undefined} style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
             <ScenarioPanel scenario={scenario} phase={phase} typed={phase === 'settled' ? scenario.output : shown} />
             <div style={{ position: 'absolute', right: 'min(8%, 60px)', top: -28, zIndex: 2 }}>
               <HUD

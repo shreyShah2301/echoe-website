@@ -72,3 +72,58 @@ html, body {
 
 @keyframes echoe-spin { to { transform: rotate(360deg); } }
 @keyframes echoe-blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+/* ============================================================================
+   Pass 2 — motion. All new animation CSS lives here (a bundled stylesheet
+   linked from the HTML), NOT in index.html, so the prerendered dist/index.html
+   gains no new opacity:0. Every reveal hidden-state is gated behind html.js-anim
+   (added by JS after hydration) AND prefers-reduced-motion: no-preference — so
+   static markup, no-JS, and reduced-motion all render fully visible. Reveals
+   animate transform + opacity only (zero CLS).
+   ============================================================================ */
+
+/* Scroll reveals (items C, D): fade-up 12px. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js-anim .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity var(--dur-slow) var(--ease-default),
+                transform var(--dur-slow) var(--ease-default);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  html.js-anim .reveal.is-visible {
+    opacity: var(--reveal-rest, 1);
+    transform: none;
+  }
+}
+
+/* Wedge cards (item C): Echoe elevated, Others recessed. */
+.wedge-elevated { box-shadow: 0 12px 36px rgba(28, 26, 21, 0.10), 0 3px 10px rgba(28, 26, 21, 0.05); }
+.wedge-recessed { opacity: 0.85; --reveal-rest: 0.85; }
+
+/* Pricing (item E): hover lift on all cards; resting elevation on the popular one. */
+.price-card { transition: transform var(--dur-fast) var(--ease-default), box-shadow var(--dur-fast) var(--ease-default); }
+.price-card:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(28, 26, 21, 0.12); }
+.price-card-pop { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(28, 26, 21, 0.20); }
+.price-card-pop:hover { transform: translateY(-6px); box-shadow: 0 22px 50px rgba(28, 26, 21, 0.24); }
+
+/* Keycaps (item F): physical depth + 1px press on hover. */
+.keycap { box-shadow: 0 1.5px 0 0 var(--hairline-stronger); transition: transform var(--dur-fast) var(--ease-default), box-shadow var(--dur-fast) var(--ease-default); }
+.keycap:hover { transform: translateY(1px); box-shadow: 0 0.5px 0 0 var(--hairline-stronger); }
+.keycap-on-dark { box-shadow: 0 1.5px 0 0 rgba(0, 0, 0, 0.35); }
+.keycap-on-dark:hover { transform: translateY(1px); box-shadow: 0 0.5px 0 0 rgba(0, 0, 0, 0.35); }
+
+/* Primary CTA lift (item F). */
+.btn-lift { transition: transform var(--dur-fast) var(--ease-default), filter var(--dur-fast) var(--ease-default); }
+.btn-lift:hover { transform: translateY(-1px); filter: brightness(0.96); }
+
+/* Scenario switcher (item B): fade-in-slide on swap + active-tab dwell progress. */
+@keyframes scenario-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.scenario-swap { animation: scenario-in var(--dur-default) var(--ease-default); }
+@keyframes scenario-progress-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.scenario-progress {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--terracotta); border-radius: 0 0 12px 12px;
+  transform: scaleX(0); transform-origin: left;
+}
+.scenario-progress.is-running { animation: scenario-progress-fill 3000ms linear forwards; }

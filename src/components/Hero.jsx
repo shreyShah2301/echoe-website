@@ -1,6 +1,6 @@
 // Echoe Landing EN: Hero + Nav
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { EchoeMark, Kbd, PulseOrb, AppTile, HUD, useTypewriter } from './Shared.jsx';
 
 const DMG_URL = 'https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.3/Echoe-1.1.3.dmg';
@@ -15,6 +15,7 @@ export const NavEN = () => {
           <a className="nav-link" href="#how">How it works</a>
           <a className="nav-link" href="#pricing">Pricing</a>
           <a
+            className="btn-lift"
             href={DMG_URL}
             download
             rel="noopener noreferrer"
@@ -57,6 +58,7 @@ export const StickyBarEN = () => {
       <div className="container sticky-bar-row">
         <EchoeMark height={26} />
         <a
+          className="btn-lift"
           href={DMG_URL}
           download
           rel="noopener noreferrer"
@@ -116,7 +118,7 @@ const SpokenChip = ({ phase }) => {
 // SlackComposerMock now receives `phase` as a prop so the parent can sync
 // the HUD with the same lifecycle. No internal phase state.
 const SlackComposerMock = ({ phase }) => {
-  const { shown } = useTypewriter(HERO_REPLY, { speed: 22, play: phase === 'typing' });
+  const { shown } = useTypewriter(HERO_REPLY, { speed: 32, play: phase === 'typing' });
   const showText = phase === 'typing' || phase === 'settled';
   const text = phase === 'settled' ? HERO_REPLY : shown;
 
@@ -218,24 +220,48 @@ export const HeroEN = () => {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Single source of truth for the demo cycle. SlackComposerMock + HUD
-  // both read this, so they animate as one demo, not two separate widgets.
-  const [phase, setPhase] = useState('idle');
+  // Single source of truth for the demo cycle. SlackComposerMock + HUD both read
+  // this, so they animate as one demo, not two separate widgets. We mount on the
+  // SETTLED frame — that's what the prerenderer bakes into the static HTML, so the
+  // page reads as a finished transformation with zero JS. The loop only starts
+  // after hydration, and pauses whenever the hero scrolls out of view.
+  const [phase, setPhase] = useState('settled');
+  const [hudShown, setHudShown] = useState(true);
+  const heroRef = useRef(null);
+
   useEffect(() => {
+    // Reduced motion: keep the settled frame, never animate.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     let timers = [];
-    const reset = () => {
-      timers.push(setTimeout(() => setPhase('listening'),    1000));
-      timers.push(setTimeout(() => setPhase('transforming'), 4200));
-      timers.push(setTimeout(() => setPhase('typing'),       5100));
-      timers.push(setTimeout(() => setPhase('settled'),      9800));
-      timers.push(setTimeout(() => { setPhase('idle'); reset(); }, 13500));
+    const clear = () => { timers.forEach(clearTimeout); timers = []; };
+    const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+
+    // One full cycle, beginning from the settled/inserted frame we mount on:
+    // hold → HUD fades → reset → listening → transforming → type → settled → loop.
+    const runCycle = () => {
+      clear();
+      setPhase('settled'); setHudShown(true);
+      at(2200,  () => setHudShown(false));                       // HUD fades after a beat
+      at(4000,  () => { setPhase('idle'); setHudShown(true); });  // reset, HUD returns as Listening
+      at(5000,  () => setPhase('listening'));
+      at(8200,  () => setPhase('transforming'));
+      at(9100,  () => setPhase('typing'));
+      at(11600, runCycle);                                        // text has settled → loop
     };
-    reset();
-    return () => timers.forEach(clearTimeout);
+
+    const el = heroRef.current;
+    if (!el) { runCycle(); return () => clear(); }
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) runCycle();
+      else clear();
+    }, { threshold: 0 });
+    io.observe(el);
+    return () => { clear(); io.disconnect(); };
   }, []);
 
   return (
-    <section id="hero" style={{ padding: isMobile ? '40px 0 60px' : '64px 0 80px', overflow: 'hidden' }}>
+    <section ref={heroRef} id="hero" style={{ padding: isMobile ? '40px 0 60px' : '64px 0 80px', overflow: 'hidden' }}>
       <div className="container" style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : '1.05fr 1fr',
@@ -256,6 +282,7 @@ export const HeroEN = () => {
 
           <div style={{ marginTop: 36, display: 'flex', flexDirection: 'column', gap: 10 }}>
             <a
+              className="btn-lift"
               href={DMG_URL}
               download
               rel="noopener noreferrer"
@@ -295,7 +322,7 @@ export const HeroEN = () => {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 12 }}>
             <SpokenChip phase={phase} />
             <SlackComposerMock phase={phase} />
-            <div style={{ marginTop: -8 }}>
+            <div style={{ marginTop: -8, opacity: hudShown ? 1 : 0, transition: 'opacity 320ms var(--ease-default)' }}>
               <HUD
                 state={hudStateForPhase(phase)}
                 title={hudTitleForPhase(phase)}
@@ -309,7 +336,7 @@ export const HeroEN = () => {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
             <SpokenChip phase={phase} />
             <SlackComposerMock phase={phase} />
-            <div style={{ marginTop: -8 }}>
+            <div style={{ marginTop: -8, opacity: hudShown ? 1 : 0, transition: 'opacity 320ms var(--ease-default)' }}>
               <HUD
                 state={hudStateForPhase(phase)}
                 title={hudTitleForPhase(phase)}

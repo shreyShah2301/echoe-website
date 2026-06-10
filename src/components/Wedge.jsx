@@ -21,7 +21,7 @@ export const WedgeSectionEN = () => {
   return (
     <section id="how" style={{ background: 'var(--ivory)' }}>
       <div className="container">
-        <div style={{ maxWidth: 720 }}>
+        <div className="reveal" style={{ maxWidth: 720 }}>
           <div className="eyebrow">The wedge</div>
           <h2 className="h2" style={{ marginTop: 14 }}>
             Hinglish stays <span style={{ color: 'var(--terracotta)' }}>Hinglish</span>
@@ -42,12 +42,15 @@ export const WedgeSectionEN = () => {
           gap: 16, alignItems: 'stretch',
         }}>
           {Object.entries(WEDGE_OUTPUTS_EN).map(([key, opt]) => (
-            <div key={key} style={{
-              padding: '32px 32px',
-              background: key === 'echoe' ? 'var(--tint-terracotta-fill)' : 'var(--parchment)',
-              border: `0.5px solid ${key === 'echoe' ? 'var(--tint-terracotta-border)' : 'var(--hairline)'}`,
-              borderRadius: 14, display: 'flex', flexDirection: 'column', gap: 18,
-            }}>
+            <div key={key}
+              className={`reveal ${key === 'echoe' ? 'wedge-elevated' : 'wedge-recessed'}`}
+              style={{
+                '--reveal-delay': key === 'echoe' ? '0ms' : '120ms',
+                padding: '32px 32px',
+                background: key === 'echoe' ? 'var(--tint-terracotta-fill)' : 'var(--parchment)',
+                border: `0.5px solid ${key === 'echoe' ? 'var(--tint-terracotta-border)' : 'var(--hairline)'}`,
+                borderRadius: 14, display: 'flex', flexDirection: 'column', gap: 18,
+              }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
                 <span style={{ font: '500 16px/1 var(--font-ui)', color: 'var(--ink)' }}>{opt.label}</span>
                 <span style={{ font: '500 11px/1 var(--font-ui)', letterSpacing: '0.12em', textTransform: 'uppercase', color: opt.accent }}>{opt.subtitle}</span>

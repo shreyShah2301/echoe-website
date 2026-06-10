@@ -24,7 +24,7 @@ export const EchoeMark = ({ height = 28, variant = 'primary' }) => {
 // Kbd: keyboard chip in JetBrains Mono.
 // ============================================================================
 export const Kbd = ({ children, onDark = false, size = 11, style = {} }) => (
-  <span style={{
+  <span className={`keycap${onDark ? ' keycap-on-dark' : ''}`} style={{
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
     font: `500 ${size}px/1 var(--font-mono)`,
     background: onDark ? 'rgba(245,241,232,0.15)' : '#FFFFFF',
