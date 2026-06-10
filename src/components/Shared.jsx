@@ -14,7 +14,7 @@ export const EchoeMark = ({ height = 28, variant = 'primary' }) => {
   return (
     <img
       src={src}
-      alt="Echoe"
+      alt="Echoe — voice dictation for Mac"
       style={{ height, width: 'auto', display: 'block' }}
     />
   );

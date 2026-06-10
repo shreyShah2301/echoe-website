@@ -46,7 +46,7 @@ export const MechanicSectionEN = () => (
       <div className="mechanic-grid" style={{ marginTop: 56 }}>
         <Card>
           <div className="eyebrow" style={{ color: 'var(--dust)', marginBottom: 16 }}>Step 01</div>
-          <div style={{ font: '500 22px/1.25 var(--font-ui)', color: 'var(--ink)', letterSpacing: '-0.015em', marginBottom: 14 }}>Hold a hotkey.</div>
+          <h3 style={{ font: '500 22px/1.25 var(--font-ui)', color: 'var(--ink)', letterSpacing: '-0.015em', margin: '0 0 14px' }}>Hold a hotkey.</h3>
           <div style={{ font: '400 14px/1.5 var(--font-ui)', color: 'var(--sepia)', marginBottom: 22 }}>
             Right ⌘ by default. fn, caps lock, anything. Works in any app where your cursor is.
           </div>
@@ -58,7 +58,7 @@ export const MechanicSectionEN = () => (
 
         <Card>
           <div className="eyebrow" style={{ color: 'var(--dust)', marginBottom: 16 }}>Step 02</div>
-          <div style={{ font: '500 22px/1.25 var(--font-ui)', color: 'var(--ink)', letterSpacing: '-0.015em', marginBottom: 14 }}>The HUD does the rest.</div>
+          <h3 style={{ font: '500 22px/1.25 var(--font-ui)', color: 'var(--ink)', letterSpacing: '-0.015em', margin: '0 0 14px' }}>The HUD does the rest.</h3>
           <div style={{ font: '400 14px/1.5 var(--font-ui)', color: 'var(--sepia)', marginBottom: 22 }}>
             Listening, transforming, inserted. Three states, one tiny window. Auto-dismisses when it's done.
           </div>
@@ -69,7 +69,7 @@ export const MechanicSectionEN = () => (
 
         <Card>
           <div className="eyebrow" style={{ color: 'var(--dust)', marginBottom: 16 }}>Quietly</div>
-          <div style={{ font: '500 22px/1.25 var(--font-ui)', color: 'var(--ink)', letterSpacing: '-0.015em', marginBottom: 14 }}>Auto-pauses in meetings.</div>
+          <h3 style={{ font: '500 22px/1.25 var(--font-ui)', color: 'var(--ink)', letterSpacing: '-0.015em', margin: '0 0 14px' }}>Auto-pauses in meetings.</h3>
           <div style={{ font: '400 14px/1.5 var(--font-ui)', color: 'var(--sepia)', marginBottom: 22 }}>
             Zoom, Meet, FaceTime, Slack Huddle, Teams. If your mic is busy, Echoe stays out.
           </div>
@@ -81,7 +81,7 @@ export const MechanicSectionEN = () => (
 
         <Card>
           <div className="eyebrow" style={{ color: 'var(--dust)', marginBottom: 16 }}>Quietly</div>
-          <div style={{ font: '500 22px/1.25 var(--font-ui)', color: 'var(--ink)', letterSpacing: '-0.015em', marginBottom: 14 }}>Learns your apps.</div>
+          <h3 style={{ font: '500 22px/1.25 var(--font-ui)', color: 'var(--ink)', letterSpacing: '-0.015em', margin: '0 0 14px' }}>Learns your apps.</h3>
           <div style={{ font: '400 14px/1.5 var(--font-ui)', color: 'var(--sepia)', marginBottom: 22 }}>
             Always Hinglish in Slack, English in Gmail, structured Markdown in Linear? It picks up your defaults after three dictations.
           </div>
@@ -139,7 +139,7 @@ export const PricingSectionEN = () => (
                 font: '500 10px/1 var(--font-ui)', letterSpacing: '0.14em', textTransform: 'uppercase',
               }}>Most popular</div>
             )}
-            <div style={{ font: '500 14px/1 var(--font-ui)' }}>{p.label}</div>
+            <h3 style={{ font: '500 14px/1 var(--font-ui)', margin: 0 }}>{p.label}</h3>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
               <span style={{ font: '500 36px/1 var(--font-ui)', letterSpacing: '-0.025em' }}>{p.price}</span>
               <span style={{ font: '400 13px/1 var(--font-ui)', color: p.highlight ? 'rgba(245,241,232,0.6)' : 'var(--dust)' }}>{p.suffix}</span>
@@ -270,6 +270,70 @@ export const ContactSectionEN = () => (
   </section>
 );
 
+// SHA-256 of Echoe-1.1.3.dmg. Lets users verify the download integrity against
+// the Sparkle appcast / GitHub release. Update on every release.
+const DMG_SHA256 = 'e00a76548681f79924a77baa136ee2c4a3b61fa7567aafdf39acfefd9f8dcfd1';
+
+// Expandable "Verify download" disclosure under the final CTA. Renders collapsed
+// in SSR (open=false) so it's SSG-safe; enhanced on the client. Lives on the dark
+// (ink) section, so colors are ivory-on-dark.
+const VerifyDownload = () => {
+  const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(DMG_SHA256);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1600);
+      } catch {
+        // Clipboard blocked — the code stays selectable as a fallback.
+      }
+    }
+  };
+  return (
+    <div style={{ marginTop: 4, width: '100%', maxWidth: 460 }}>
+      <div style={{ textAlign: 'center' }}>
+        <button
+          onClick={() => setOpen(o => !o)}
+          aria-expanded={open}
+          style={{
+            background: 'transparent', border: 'none', cursor: 'pointer', padding: 0,
+            color: 'rgba(245,241,232,0.55)', font: '400 12px/1.5 var(--font-ui)',
+            textDecoration: 'underline', textUnderlineOffset: 3,
+          }}
+        >{open ? 'Hide verification' : 'Verify download'}</button>
+      </div>
+      <div style={{
+        maxHeight: open ? 180 : 0, overflow: 'hidden', opacity: open ? 1 : 0,
+        transition: 'max-height 280ms var(--ease-default), opacity 240ms var(--ease-default)',
+      }}>
+        <div style={{
+          marginTop: 12, padding: '12px 14px', textAlign: 'left',
+          background: 'rgba(245,241,232,0.06)',
+          border: '0.5px solid rgba(245,241,232,0.18)', borderRadius: 10,
+          display: 'flex', flexDirection: 'column', gap: 8,
+        }}>
+          <div style={{ font: '500 10px/1 var(--font-ui)', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(245,241,232,0.45)' }}>SHA-256</div>
+          <code style={{
+            font: '400 12px/1.55 var(--font-mono)', color: 'rgba(245,241,232,0.85)',
+            wordBreak: 'break-all', userSelect: 'all',
+          }}>{DMG_SHA256}</code>
+          <button
+            onClick={copy}
+            style={{
+              alignSelf: 'flex-start', marginTop: 2,
+              background: 'transparent', border: '0.5px solid rgba(245,241,232,0.25)',
+              color: 'rgba(245,241,232,0.7)', borderRadius: 6, cursor: 'pointer',
+              padding: '5px 10px', font: '500 11px/1 var(--font-ui)',
+            }}
+          >{copied ? 'Copied ✓' : 'Copy'}</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const FinalCTAEN = () => (
   <section style={{ background: 'var(--ink)', color: 'var(--ivory)', padding: '120px 0' }}>
     <div className="container" style={{ textAlign: 'center' }}>
@@ -281,6 +345,7 @@ export const FinalCTAEN = () => (
         <a
           href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.3/Echoe-1.1.3.dmg"
           download
+          rel="noopener noreferrer"
           style={{
             background: 'var(--terracotta)',
             color: 'var(--ivory)',
@@ -291,11 +356,12 @@ export const FinalCTAEN = () => (
             textDecoration: 'none',
           }}
         >
-          Download for Mac
+          Download for Mac — Free
         </a>
         <div style={{ font: '400 12px/1.5 var(--font-ui)', color: 'rgba(245,241,232,0.55)' }}>
           macOS 14+ · Apple Silicon and Intel
         </div>
+        <VerifyDownload />
       </div>
       <div style={{ marginTop: 24, display: 'inline-flex', gap: 8, alignItems: 'center', font: '400 13px/1 var(--font-ui)', color: 'rgba(245,241,232,0.55)' }}>
         <Kbd onDark size={11}>right ⌘</Kbd><span>Hold to dictate</span>

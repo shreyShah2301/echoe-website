@@ -3,17 +3,11 @@
 import { useState, useEffect } from 'react';
 import { EchoeMark, Kbd, PulseOrb, AppTile, HUD, useTypewriter } from './Shared.jsx';
 
-
+const DMG_URL = 'https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.3/Echoe-1.1.3.dmg';
 
 export const NavEN = () => {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
   return (
-    <header className={`nav ${scrolled ? 'scrolled' : ''}`}>
+    <header className="nav">
       <div className="container nav-row">
         <EchoeMark height={32} />
         <div className="nav-actions">
@@ -21,8 +15,9 @@ export const NavEN = () => {
           <a className="nav-link" href="#how">How it works</a>
           <a className="nav-link" href="#pricing">Pricing</a>
           <a
-            href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.3/Echoe-1.1.3.dmg"
+            href={DMG_URL}
             download
+            rel="noopener noreferrer"
             style={{
               background: 'transparent',
               color: 'var(--terracotta)',
@@ -38,6 +33,47 @@ export const NavEN = () => {
         </div>
       </div>
     </header>
+  );
+};
+
+// Slim sticky bar that slides in once the hero scrolls out of view. Uses an
+// IntersectionObserver on the hero section (no scroll listeners), and is
+// hidden by default so it ships off-screen in the prerendered static HTML
+// with no layout shift — the observer enhances it client-side after hydration.
+export const StickyBarEN = () => {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const hero = document.getElementById('hero');
+    if (!hero) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setVisible(!entry.isIntersecting),
+      { rootMargin: '0px', threshold: 0 }
+    );
+    io.observe(hero);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div className={`sticky-bar ${visible ? 'is-visible' : ''}`} aria-hidden={!visible}>
+      <div className="container sticky-bar-row">
+        <EchoeMark height={26} />
+        <a
+          href={DMG_URL}
+          download
+          rel="noopener noreferrer"
+          tabIndex={visible ? 0 : -1}
+          style={{
+            background: 'var(--terracotta)',
+            color: 'var(--ivory)',
+            borderRadius: 999,
+            padding: '10px 20px',
+            font: '500 13px/1 var(--font-ui)',
+            letterSpacing: '-0.005em',
+            textDecoration: 'none',
+            whiteSpace: 'nowrap',
+          }}
+        >Download</a>
+      </div>
+    </div>
   );
 };
 
@@ -199,7 +235,7 @@ export const HeroEN = () => {
   }, []);
 
   return (
-    <section style={{ padding: isMobile ? '40px 0 60px' : '64px 0 80px', overflow: 'hidden' }}>
+    <section id="hero" style={{ padding: isMobile ? '40px 0 60px' : '64px 0 80px', overflow: 'hidden' }}>
       <div className="container" style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : '1.05fr 1fr',
@@ -220,8 +256,9 @@ export const HeroEN = () => {
 
           <div style={{ marginTop: 36, display: 'flex', flexDirection: 'column', gap: 10 }}>
             <a
-              href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.3/Echoe-1.1.3.dmg"
+              href={DMG_URL}
               download
+              rel="noopener noreferrer"
               style={{
                 alignSelf: 'flex-start',
                 background: 'var(--terracotta)',
@@ -233,10 +270,10 @@ export const HeroEN = () => {
                 textDecoration: 'none',
               }}
             >
-              Download for Mac
+              Download for Mac — Free
             </a>
             <div style={{ font: '400 12px/1.5 var(--font-ui)', color: 'var(--dust)' }}>
-              macOS 14+ · Apple Silicon and Intel
+              macOS 14+ · Apple Silicon and Intel · v1.1.3 · 6 MB
             </div>
             <div style={{ font: '400 12px/1.5 var(--font-ui)', color: 'var(--dust)' }}>
               Pro from ₹399/mo.

@@ -1,6 +1,6 @@
 // Echoe Landing EN: App shell
 
-import { NavEN, HeroEN } from './components/Hero.jsx';
+import { NavEN, HeroEN, StickyBarEN } from './components/Hero.jsx';
 import { DemoSectionEN } from './components/Demo.jsx';
 import { WedgeSectionEN } from './components/Wedge.jsx';
 import { MechanicSectionEN, PricingSectionEN, FAQSectionEN, FinalCTAEN, ContactSectionEN, FooterEN } from './components/Rest.jsx';
@@ -8,6 +8,7 @@ import { MechanicSectionEN, PricingSectionEN, FAQSectionEN, FinalCTAEN, ContactS
 export default function App() {
   return (
     <>
+      <StickyBarEN />
       <NavEN />
       <HeroEN />
       <DemoSectionEN />
