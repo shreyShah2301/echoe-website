@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { EchoeMark, Kbd, PulseOrb, AppTile, HUD, useTypewriter } from './Shared.jsx';
 
-const DMG_URL = 'https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.3/Echoe-1.1.3.dmg';
+const DMG_URL = 'https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.4/Echoe-1.1.4.dmg';
 
 export const NavEN = () => {
   return (
@@ -292,7 +292,7 @@ export const HeroEN = () => {
               Download for Mac — Free
             </a>
             <div style={{ font: '400 12px/1.5 var(--font-ui)', color: 'var(--dust)' }}>
-              macOS 14+ · Apple Silicon and Intel · v1.1.3 · 6 MB
+              macOS 14+ · Apple Silicon and Intel · v1.1.4 · 7 MB
             </div>
             <div style={{ font: '400 12px/1.5 var(--font-ui)', color: 'var(--dust)' }}>
               Pro from ₹399/mo.

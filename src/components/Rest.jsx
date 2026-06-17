@@ -279,9 +279,9 @@ export const ContactSectionEN = () => (
   </section>
 );
 
-// SHA-256 of Echoe-1.1.3.dmg. Lets users verify the download integrity against
+// SHA-256 of Echoe-1.1.4.dmg. Lets users verify the download integrity against
 // the Sparkle appcast / GitHub release. Update on every release.
-const DMG_SHA256 = 'e00a76548681f79924a77baa136ee2c4a3b61fa7567aafdf39acfefd9f8dcfd1';
+const DMG_SHA256 = '407b7342cf691e1257c324ee2a439876877fa45b528f18c362a4024f036854ef';
 
 // Expandable "Verify download" disclosure under the final CTA. Renders collapsed
 // in SSR (open=false) so it's SSG-safe; enhanced on the client. Lives on the dark
@@ -353,7 +353,7 @@ export const FinalCTAEN = () => (
       <div className="reveal" style={{ marginTop: 36, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, '--reveal-delay': '120ms' }}>
         <a
           className="btn-lift"
-          href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.3/Echoe-1.1.3.dmg"
+          href="https://github.com/shreyShah2301/echoe-website/releases/download/v1.1.4/Echoe-1.1.4.dmg"
           download
           rel="noopener noreferrer"
           style={{
